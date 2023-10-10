@@ -15,6 +15,9 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 repositories {
@@ -37,6 +40,9 @@ dependencies {
 
     //Thymeleaf layout ( 23.10.10 )
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+
+    // log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
 
 }
