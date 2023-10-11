@@ -38,11 +38,15 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    //Thymeleaf layout ( 23.10.10 )
+    // Thymeleaf layout ( 23.10.10 )
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
-    // log4j2
+    // log4j2 ( 23.10.10 )
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // swagger ui ( 23.10.11 )
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
 
 }
