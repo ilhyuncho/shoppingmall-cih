@@ -55,6 +55,15 @@ public class MemoRepositoryPagingTest {
                 });
     }
 
+    @Test
+    public void testQueryMethods(){
+
+        List<Memo> list = memoRepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+        for (Memo memo : list) {
+            System.out.println(memo);
+        }
+
+    }
 
 
 
