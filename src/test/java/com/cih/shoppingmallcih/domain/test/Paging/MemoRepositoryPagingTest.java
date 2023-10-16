@@ -10,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @SpringBootTest
@@ -62,10 +64,72 @@ public class MemoRepositoryPagingTest {
         for (Memo memo : list) {
             System.out.println(memo);
         }
-
     }
 
+    @Test
+    public void testQueryMethodWithPageable(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
 
+        Page<Memo> result = memoRepository.findByMnoBetween(70L, 80L, pageable);
+
+        result.get().forEach( memo -> System.out.println(memo));
+
+        // 둘이 같음
+//        for (Memo memo : result.getContent()) {
+//            System.out.println(memo);
+//        }
+    }
+
+    @Test
+    @Commit
+    @Transactional
+    public void deleteBy(){
+        // @Commit
+        // @Transactional
+        memoRepository.deleteMemoByMnoLessThan(20L);
+        // 실제 개발 에서는 deleteby는 많이 사용되지 않음
+        // 한번에 삭제 되는 것이 아닌 각 엔티티 객체를 하나씩 삭제 하기 때문
+        // 개발 시에는 deleteBy를 이용하는 방식 보다는 @Query를 이용해서 개선 함
+    }
+    @Test
+    public void updateMemoText(){
+        Memo memo = new Memo(20L, "gdfgdfg");
+
+        memoRepository.updateMemoText(memo);
+    }
+
+    @Test
+    public void getListWithQuery(){
+
+        Pageable pageable = PageRequest.of(0,10);
+
+        Page<Memo> result = memoRepository.getListWithQuery(30L, pageable);
+
+        System.out.println("================");
+        System.out.println("Total pages: " + result.getTotalPages() );  // 총 몇 페이지
+        System.out.println("Total Count: " + result.getTotalElements());    // 전체 개수
+        System.out.println("Page Number: " + result.getNumber());   // 현재 페이지 번호
+        System.out.println("Page Size : " + result.getSize());  // 페이지당 데이터 갯수
+        System.out.println("has next page?: " + result.hasNext()); // 다음 페이지 존재 여부
+
+        List<Memo> content = result.getContent();
+
+        for (Memo memo : content) {
+            System.out.println(memo);
+        }
+    }
+
+    @Test
+    public void getListWithQueryObject(){
+        Pageable pageable = PageRequest.of(0,10);
+
+        Page<Object[]> result = memoRepository.getListWithQueryObject(30L, pageable);
+
+        List<Object[]> content = result.getContent();
+        for (Object[] objects : content) {
+            System.out.println(objects[0] + "," + objects[1] + "," + objects[2]);
+        }
+    }
 
 
 }
