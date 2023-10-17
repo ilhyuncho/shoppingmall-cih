@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.controller.test;
 
+import com.cih.shoppingmallcih.domain.test.Memo;
 import com.cih.shoppingmallcih.dto.test.TestRequestDTO;
 import com.cih.shoppingmallcih.dto.test.TestResponseDTO;
 import lombok.extern.log4j.Log4j2;
@@ -21,11 +22,12 @@ public class HelloController {
 
     @GetMapping("/hello")
     public void hello(){
-        // test/hello.html 으로 이동
-
         log.info("fdfdfdfdf");
         log.error("erordfsdfsdfs");
 
+
+
+        // test/hello.html 으로 이동
     }
 
     @GetMapping("/list")
@@ -37,5 +39,7 @@ public class HelloController {
 
         model.addAttribute("TestResponseDTO",dto );
     }
+
+
 
 }
