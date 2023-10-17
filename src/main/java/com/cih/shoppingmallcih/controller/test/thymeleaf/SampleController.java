@@ -25,7 +25,7 @@ public class SampleController {
         log.info("ex1.........");
     }
 
-    @GetMapping( {"/ex2"} )   // {} 여러개 지정
+    @GetMapping( {"/ex2", "/exLink"} )   // {} 여러개 지정
     public void ex2(Model model){
 
         List<SampleDTO> list= IntStream.rangeClosed(1,20).asLongStream().mapToObj(i -> {
@@ -62,6 +62,24 @@ public class SampleController {
     @GetMapping("/ex3")
     public void ex3(){
         log.info("ex3");
+    }
+
+    @GetMapping({"/exView"})
+    public void exView(String sno, Model model){
+        log.info("exView....: " + sno );
+
+        model.addAttribute("sno", sno);
+    }
+
+    @GetMapping({"/exView/*"})
+    public String exView2(RedirectAttributes redirectAttributes){
+        //    sno를 path로 지정했을때 받는 방법
+
+        log.info("exView2....: ");
+
+        redirectAttributes.addFlashAttribute("result", "success~~~~~");
+
+        return "redirect:/test/thymeleaf/ex3";
     }
 
 }
