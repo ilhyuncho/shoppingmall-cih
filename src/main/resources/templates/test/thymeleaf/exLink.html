@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <ul>
+        <li th:each="dto: ${list}">
+            [[${dto.sno}]] -- [[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]
+
+            <a th:href="@{/test/thymeleaf/exView(sno=${dto.sno})}">[[${dto}]]</a>
+<!--            sno를 path로 이용하고 싶다면-->
+<!--            <a th:href="@{/test/thymeleaf/exView/{sno}(sno=${dto.sno})}">[[${dto}]]</a>-->
+        </li>
+    </ul>
+</body>
+</html>

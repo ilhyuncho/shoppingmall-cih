@@ -41,6 +41,9 @@ dependencies {
     // Thymeleaf layout ( 23.10.10 )
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
+    // Thymeleaf java8time
+    implementation group: 'org.thymeleaf.etras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
+
     // log4j2 ( 23.10.10 )
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
@@ -50,6 +53,7 @@ dependencies {
 
     // spring security (23.10.11 )
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 }
 
