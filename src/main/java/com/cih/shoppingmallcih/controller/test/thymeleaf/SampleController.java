@@ -82,4 +82,16 @@ public class SampleController {
         return "redirect:/test/thymeleaf/ex3";
     }
 
+    @GetMapping({"/thymeleafEx"})
+    public void thymeleafEx(){
+
+//        thymeleaf 의 layout:decorate 활용 예제
+
+        log.info("thymeleafEx......");
+    }
+
+    @GetMapping({"/exTemplate"})
+    public void exTemplate(){
+        log.info("exTemplate......");
+    }
 }
