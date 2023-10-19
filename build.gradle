@@ -60,6 +60,7 @@ dependencies {
     // spring security (23.10.11 )
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    // JPA-querydql start
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 
     annotationProcessor(
@@ -69,7 +70,10 @@ dependencies {
             "javax.annotation:javax.annotation-api",
 
             "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+    // JPA-querydql end
 
+    // modelmapper
+    implementation 'org.modelmapper:modelmapper:3.1.0'
 
 }
 
