@@ -45,6 +45,10 @@ public class SecurityConfig {
 //                .antMatchers("/home").permitAll()
 //                .antMatchers("/mypage").authenticated()
 //                .anyRequest().authenticated();
+        
+        // 모든 요청에 인증을 요구하도록 지정
+        //http.httpBasic();
+        //http.authorizeHttpRequests().anyRequest().authenticated();
 
         return http.build();
     }
