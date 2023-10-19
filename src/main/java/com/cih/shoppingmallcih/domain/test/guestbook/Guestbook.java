@@ -18,16 +18,15 @@ public class Guestbook extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gno;
 
+    @Setter
     @Column(length = 100, nullable = false)
     private String title;
 
+    @Setter
     @Column(length = 1500, nullable = false)
     private String content;
 
     @Column(length = 50, nullable = false)
     private String writer;
-
-
-
 
 }
