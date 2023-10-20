@@ -99,5 +99,35 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+  document.querySelector(".pagination").addEventListener("click", function(e){
+
+    e.preventDefault()  // a태그 나 submit태그의 고유 동작을 중단
+    e.stopPropagation() // 상위 엘리먼트들로의 이벤트 전파를 중단시킨다.
+
+    const target = e.target   // a 태그
+
+    if(target.tagName !== 'A'){
+      return
+    }
+
+    const num = target.getAttribute("data-num")
+    const formObj = document.querySelector("form")
+
+    formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+    formObj.submit();
+
+  }, false)
+
+  document.querySelector(".clearBtn").addEventListener("click", function(e){
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    self.location = '/board/list' // 자바스크립트로 다른 url 호출
+
+  },false)
+
+
   console.log("hello.html script..........")
 </script>
