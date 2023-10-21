@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+
 @Log4j2
 @Configuration
 public class SecurityConfig {
@@ -40,15 +42,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info("configure.......");
 
-//        http.cors().and().csrf().disable()
+//                http.cors().and().csrf().disable()
 //                .and().authorizeRequests()
 //                .antMatchers("/home").permitAll()
 //                .antMatchers("/mypage").authenticated()
 //                .anyRequest().authenticated();
-        
+
+
         // 모든 요청에 인증을 요구하도록 지정
         //http.httpBasic();
         //http.authorizeHttpRequests().anyRequest().authenticated();
+
+        http.csrf().disable();                  // post요청에서 403 forbidden 에러 발생 때문에
 
         return http.build();
     }
