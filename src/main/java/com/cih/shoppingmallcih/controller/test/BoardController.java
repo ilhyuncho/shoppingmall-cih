@@ -59,6 +59,8 @@ public class BoardController {
 
         Long bno = boardService.register(boardDTO);
 
+        // 쿼리 스트링으로 처리 되지 않음, 브라우저 경로에 보이지 않음
+        // 일회성으로 데이터를 전송 할때 사용
         redirectAttributes.addFlashAttribute("result", bno);
 
         return "redirect:/board/list";
