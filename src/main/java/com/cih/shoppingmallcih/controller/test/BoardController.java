@@ -66,4 +66,16 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/read")
+    public String read(Long bno, PageRequestDTO pageRequestDTO, Model model){
+
+        BoardDTO boardDTO = boardService.readOne(bno);
+
+        log.info(boardDTO);
+
+        model.addAttribute("dto", boardDTO);
+
+        return "/test/board/read";
+    }
+
 }
