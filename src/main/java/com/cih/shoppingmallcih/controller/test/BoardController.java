@@ -29,6 +29,8 @@ public class BoardController {
     @GetMapping("/list")
     public String list(PageRequestDTO pageRequestDTO, Model model){
 
+        log.info(pageRequestDTO);
+
         PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
         log.info(responseDTO);
@@ -102,6 +104,17 @@ public class BoardController {
         redirectAttributes.addAttribute("bno", boardDTO.getBno());
 
         return "redirect:/board/read";
+    }
+
+    @PostMapping("/remove")
+    public String remove( Long bno, RedirectAttributes redirectAttributes){
+        log.info("remove......post: " + bno);
+
+        boardService.remove(bno);
+
+        redirectAttributes.addFlashAttribute("result", "removed");
+
+        return "redirect:/board/list";
     }
 
 

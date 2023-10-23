@@ -102,6 +102,29 @@
 
   },false)
 
+  // 삭제 요청
+  document.querySelector(".removeBtn").addEventListener("click", function(e){
+    e.preventDefault()
+    e.stopPropagation()
+
+    formObj.action=`/board/remove`
+    formObj.method='post'
+    formObj.submit()
+
+  }, false)
+
+  // 목록으로 이동
+  document.querySelector(".listBtn").addEventListener("click", function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    console.log('gfdfgdfg' + link)
+
+    formObj.reset()
+    self.location = `/board/list?${link}`
+
+  }, false)
+
 
 
 </script>
