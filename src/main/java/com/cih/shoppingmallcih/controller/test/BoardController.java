@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -66,16 +67,43 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/read")
-    public String read(Long bno, PageRequestDTO pageRequestDTO, Model model){
+    @GetMapping({"/read", "/modify"})
+    public String read(HttpServletRequest request, Long bno, PageRequestDTO pageRequestDTO, Model model){
+
+        String requestURI = request.getRequestURI();
 
         BoardDTO boardDTO = boardService.readOne(bno);
 
-        log.info(boardDTO);
+        log.info("get-read:" + pageRequestDTO);
 
         model.addAttribute("dto", boardDTO);
 
-        return "/test/board/read";
+        log.info("/test" + requestURI);
+        return "/test" + requestURI;
     }
+    @PostMapping("/modify")
+    public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes){
+        log.info("board modify post...." + boardDTO);
+
+        if(bindingResult.hasErrors()){
+            log.info("has errors.....");
+
+            String link = pageRequestDTO.getLink();
+
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addAttribute("bno", boardDTO.getBno());
+            return "redirect:/board/modify?" + link;
+        }
+
+        boardService.modify(boardDTO);
+
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+        return "redirect:/board/read";
+    }
+
+
 
 }
