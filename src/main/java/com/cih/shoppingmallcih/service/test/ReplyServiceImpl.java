@@ -8,6 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Log4j2
 @RequiredArgsConstructor
@@ -27,5 +29,35 @@ public class ReplyServiceImpl implements ReplyService {
 //        replyRepository.save(reply).getRno();
         replyRepository.save(reply);
         return reply.getRno();
+    }
+
+    @Override
+    public ReplyDTO read(Long rno) {
+        Optional<Reply> result = replyRepository.findById(rno);
+
+        Reply reply = result.orElseThrow();
+        return modelMapper.map(reply, ReplyDTO.class);
+    }
+
+    @Override
+    public void modify(ReplyDTO replyDTO) {
+
+        Optional<Reply> result = replyRepository.findById(replyDTO.getRno());
+
+        Reply reply = result.orElseThrow();
+
+        reply.changeText(replyDTO.getReplyText());  // 댓글의 내용만 수정 가능
+
+        replyRepository.save(reply);
+    }
+
+    @Override
+    public void remove(Long rno) {
+        Optional<Reply> byId = replyRepository.findById(rno);
+
+        if(byId.isPresent()){
+            replyRepository.deleteById(rno);
+        }
+
     }
 }
