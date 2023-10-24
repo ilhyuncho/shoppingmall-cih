@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.controller.test;
 
 
 import com.cih.shoppingmallcih.dto.test.BoardDTO;
+import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
 import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
 import com.cih.shoppingmallcih.service.test.BoardService;
@@ -31,7 +32,8 @@ public class BoardController {
 
         log.info(pageRequestDTO);
 
-        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+        //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+        PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
 
         log.info(responseDTO);
 

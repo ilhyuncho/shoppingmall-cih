@@ -3,6 +3,7 @@ package com.cih.shoppingmallcih.service.test;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
 import com.cih.shoppingmallcih.dto.test.BoardDTO;
+import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
 import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -86,8 +87,25 @@ public class BoardServiceImpl implements BoardService{
                 .dtoList(dtoList)
                 .total((int)result.getTotalElements())
                 .build();
-
     }
 
+    @Override
+    public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO) {
+
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+//        List<BoardListReplyCountDTO> dtoList = result.getContent().stream()
+//                .map(board -> modelMapper.map(board,BoardListReplyCountDTO.class)).collect(Collectors.toList());
+
+        return PageResponseDTO.<BoardListReplyCountDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent())
+                .total((int)result.getTotalElements())
+                .build();
+    }
 
 }
