@@ -2,7 +2,9 @@ package com.cih.shoppingmallcih.controller.test;
 
 
 import com.cih.shoppingmallcih.dto.test.ReplyDTO;
+import com.cih.shoppingmallcih.service.test.ReplyService;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +22,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/replies")
 @Log4j2
+@RequiredArgsConstructor
 public class ReplyController {
 
+    private final ReplyService replyService;
 
 //    @ApiOperation(value="Replies POST", notes="POST 방식으로 댓글 등록")
 //    //consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.
@@ -44,7 +48,7 @@ public class ReplyController {
     //consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.
     //produces는 서버가 클라이언트에게 반환하는 데이터 타입을 명시한다.
     @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Long>> register(@Valid @RequestBody ReplyDTO replyDTO,
+    public Map<String, Long> register(@Valid @RequestBody ReplyDTO replyDTO,
                                       BindingResult bindingResult) throws BindException{
         // @RequestBody : JSON문자열을 ReplyDTO로 변환
 
@@ -53,10 +57,13 @@ public class ReplyController {
         if(bindingResult.hasErrors()){
             throw new BindException(bindingResult);
         }
-        Map<String, Long> resultMap = new HashMap<>();
-        resultMap.put("rno", 111L);
 
-        return ResponseEntity.ok(resultMap);
+        Long result = replyService.register(replyDTO);
+
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("rno", result);
+
+        return resultMap;
 
     }
 

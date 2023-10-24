@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.service.test;
 
+import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.reply.Reply;
 import com.cih.shoppingmallcih.domain.test.reply.ReplyRepository;
 import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
@@ -30,13 +31,14 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Long register(ReplyDTO replyDTO) {
 
-        Reply reply = modelMapper.map(replyDTO, Reply.class);
+        //이부분 때문에 ModelMapper설정- MatchingStrategies.LOOSE 으로 수정
+       Reply reply = modelMapper.map(replyDTO, Reply.class);
+
 
         log.info(reply.getBoard()); // null
 
-//        replyRepository.save(reply).getRno();
-        replyRepository.save(reply);
-        return reply.getRno();
+        // db에 생성된 RNO 값 반환
+        return replyRepository.save(reply).getRno();
     }
 
     @Override
