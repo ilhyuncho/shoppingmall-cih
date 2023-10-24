@@ -1,6 +1,8 @@
 package com.cih.shoppingmallcih.controller.test;
 
 
+import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
+import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
 import com.cih.shoppingmallcih.dto.test.ReplyDTO;
 import com.cih.shoppingmallcih.service.test.ReplyService;
 import io.swagger.annotations.ApiOperation;
@@ -10,10 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -64,8 +63,23 @@ public class ReplyController {
         resultMap.put("rno", result);
 
         return resultMap;
-
     }
+
+    @ApiOperation(value="Replies of Board", notes="GET 방식으로 특정 게시물의 댓글 목록")
+    @GetMapping(value="/list/{bno}")
+    public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO){
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
+
+        return responseDTO;
+    }
+
+    @ApiOperation(value="Read Reply", notes="GET 방식으로 특정 댓글 조회")
+    @GetMapping("/{rno}")
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno){
+        ReplyDTO read = replyService.read(rno);
+        return read;
+    }
+
 
 
 
