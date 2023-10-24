@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice   // 컨트롤러에서 발생하는 예외에 대해 JSON과 같은 순수한 응답 메시지를 보낼수 있다.
 @Log4j2
@@ -44,11 +45,24 @@ public class CustomRestAdvice {
 
         Map<String, String> errorMap = new HashMap<>();
 
-        errorMap.put("time", "" + System.currentTimeMillis());  // long 으로 STring으로 변경 ㅋㅋ
+        errorMap.put("time", "" + System.currentTimeMillis());  // long 으로 String으로 변경 ㅋㅋ
         errorMap.put("msg", "constraint fails");
 
         return ResponseEntity.badRequest().body(errorMap);
     }
 
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e){
+
+        log.error(e);
+
+        Map<String, String> errorMap = new HashMap<>();
+
+        errorMap.put("time", String.valueOf(System.currentTimeMillis()));
+        errorMap.put("msg", "No Such Element Exception");
+
+        return ResponseEntity.badRequest().body(errorMap);
+    }
 
 }
