@@ -80,6 +80,20 @@ public class ReplyController {
         return read;
     }
 
+    @ApiOperation(value="Modify Reply", notes = "PUT 방식으로 특정 댓글 수정")
+    @PutMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Long> modify( @PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO){
+
+        replyDTO.setRno(rno);
+
+        replyService.modify(replyDTO);
+
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("rno", rno);
+
+        return resultMap;
+    }
+
 
 
 
