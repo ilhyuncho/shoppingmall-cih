@@ -17,6 +17,8 @@ import java.util.Collections;
 public class SwaggerConfig {
 
 //    http://localhost:8090/swagger-ui.html
+//    http://localhost:8090/swagger-ui/index.html로 변경
+
 
 
     @Bean
