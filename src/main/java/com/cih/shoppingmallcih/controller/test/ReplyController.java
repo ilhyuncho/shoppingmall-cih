@@ -70,6 +70,8 @@ public class ReplyController {
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO){
         PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
 
+        log.info("Replies list get");
+
         return responseDTO;
     }
 

@@ -12,3 +12,19 @@ async function get1(bno){
 
     return result.data
 }
+
+// 댓글 목록 처리
+async function getList({bno, page, size, goLast}){
+    const result = await axios.get(`/replies/list/${bno}`, {params: {page, size}})
+
+    console.log(result.data)
+
+    if(goLast){ // 마지막 페이지로 이동 처리
+        const total = result.data.total
+        const lastPage = parseInt(Math.ceil(total/size))
+
+        return getList({bno:bno, page:lastPage, size:size})
+    }
+
+    return result.data
+}
