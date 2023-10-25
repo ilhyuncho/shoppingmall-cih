@@ -83,6 +83,38 @@
     </div>
 
 
+<!--    댓글 등록을 위한 모달창-->
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Replyer</span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">Register</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
 <!--    axios 라이브러리 추가-->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/js/reply.js"></script>
@@ -104,6 +136,40 @@
 
     const replyList = document.querySelector('.replyList')  // 댓글 목록 DOM
     const replyPaging = document.querySelector('.replyPaging')  // 페이지 목록 DOM
+
+    // 댓글 등록 관련
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal")) // 댓글 등록 모달
+    const registerBtn = document.querySelector(".registerBtn")
+    const replyText = document.querySelector(".replyText")
+    const replyer = document.querySelector(".replyer")
+    const closeRegisterBtn = document.querySelector(".closeRegisterBtn")
+
+    // [ADD REPLY] 버튼 클릭시 모달창 보이게
+    document.querySelector(".addReplyBtn").addEventListener("click", function(e){
+        registerModal.show()
+    },false)
+
+    closeRegisterBtn.addEventListener("click", function(e){
+        registerModal.hide()
+    }, false)
+
+    registerBtn.addEventListener("click",function(e){
+        const replyObj = {
+            bno:bno,
+            replyText:replyText.value,
+            replyer:replyer.value }
+
+        addReply(replyObj).then(result =>{
+            alert(result.rno)
+            registerModal.hide()
+            replyText.value= ''
+            replyer.value=''
+
+            printReplies(1,10,true) // 댓글 목록 갱신
+        }).catch(e=>{
+            alert("Exception...")
+        })
+    },false)
 
     function printList(dtoList){    // 댓글 목록 출력
         let str = '';
