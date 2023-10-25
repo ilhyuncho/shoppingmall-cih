@@ -63,6 +63,26 @@
     </div>
   </div>
 
+<!--    댓글 처리 영역-->
+    <div class="row mt-3">
+      <div class="col-md-12">
+          <div class="my-4">
+              <button class="btn btn-info addReplyBtn">ADD REPLY</button>
+          </div>
+          <ul class="list-group replyList">
+<!--                댓글 리스트 영역-->
+          </ul>
+      </div>
+    </div><!--    <div class="row mt-3">-->
+    <div class="row mt-3">
+      <div class="col">
+          <ul class="pagination replyPaging">
+<!--                댓글 페이징 처리-->
+          </ul>
+      </div>
+    </div>
+
+
 <!--    axios 라이브러리 추가-->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/js/reply.js"></script>
@@ -71,5 +91,16 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+    const bno = [[${dto.bno}]]
+
+    // 비동기 처리
+    // get1(bno) 호출시 Promise가 반환
+    get1(bno).then(data => {
+        console.log(data)
+    }).catch(e=>{
+        console.error(e)
+    })
+
 
 </script>
