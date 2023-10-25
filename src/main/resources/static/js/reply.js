@@ -12,7 +12,6 @@ async function get1(bno){
 
     return result.data
 }
-
 // 댓글 목록 처리
 async function getList({bno, page, size, goLast}){
     const result = await axios.get(`/replies/list/${bno}`, {params: {page, size}})
@@ -28,10 +27,24 @@ async function getList({bno, page, size, goLast}){
 
     return result.data
 }
-
 // 댓글 등록
 async function addReply(replyObj){
     const response = await axios.post(`/replies/`, replyObj)
     // return 값 : {'rno':11}
+    return response.data
+}
+// 댓글 조회
+async function getReply(rno){
+    const response = await axios.get(`/replies/${rno}`)
+    return response.data
+}
+// 댓글 수정
+async function modifyReply(replyObj){
+    const response = await axios.put(`/replies/${replyObj.rno}`, replyObj)
+    return response.data
+}
+
+async function removeReply(rno){
+    const response = await axios.delete(`/replies/${rno}`)
     return response.data
 }
