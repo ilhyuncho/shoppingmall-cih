@@ -29,10 +29,10 @@ public class Board extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String writer;
 
-    @OneToMany(mappedBy = "board",      // BoardImage의 board변수
+    @OneToMany(mappedBy = "board",
             cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY
-        )
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
@@ -45,7 +45,7 @@ public class Board extends BaseEntity {
                 .build();
         imageSet.add(boardImage);
     }
-    public void clearImage(){
+    public void clearImages(){
         imageSet.forEach(boardImage -> boardImage.changeBoard(null));
     }
 

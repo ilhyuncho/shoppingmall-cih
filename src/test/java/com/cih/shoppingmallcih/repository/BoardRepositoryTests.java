@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -117,5 +119,32 @@ public class BoardRepositoryTests {
         // left join으로 한번에 select
 
     }
+
+    @Transactional
+    @Commit
+    @Test
+    public void testModifyImages(){
+        Optional<Board> result = boardRepository.findByIdWithImages(1L);
+
+        Board board = result.orElseThrow();
+
+        // 기존의 첨부파일들은 삭제
+        board.clearImages();
+
+        for(int i = 0; i < 2; i++){
+            board.addImage(UUID.randomUUID().toString(), "updateFile44"+i+".jpg");
+        }
+
+        boardRepository.save(board);
+        // 문제: 기존 image는 삭제 되지 않고.. board_bno 가 null 로 업데이트 됨
+        // 기존 image는 삭제 처리 하고 싶음
+        // @OneToMany에 orphanRemoval = true로 설정
+        
+        // 근데 실습은 delete 되지 않음 ㅜㅜ
+
+    }
+
+
+
 
 }
