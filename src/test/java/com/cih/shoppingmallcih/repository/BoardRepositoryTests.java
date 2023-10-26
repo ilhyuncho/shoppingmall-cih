@@ -93,4 +93,29 @@ public class BoardRepositoryTests {
         boardRepository.save(board);
         // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
     }
+
+    @Test
+    public void testReadWithImages() {
+        // 문제 코드
+//        Optional<Board> result = boardRepository.findById(1L);
+//
+//        Board board = result.orElseThrow();
+//
+//        log.info(board);
+//        log.info("----------");
+//        log.info(board.getImageSet());
+        // 에러 발생, db연결 끊긴 상태에서 다시 select
+
+        // 개선 버전
+        Optional<Board> result1 = boardRepository.findByIdWithImages(1L);
+
+        Board board = result1.orElseThrow();
+
+        log.info(board);
+        log.info("----------");
+        log.info(board.getImageSet());
+        // left join으로 한번에 select
+
+    }
+
 }
