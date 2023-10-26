@@ -29,9 +29,25 @@ public class Board extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String writer;
 
-    @OneToMany(mappedBy = "board")  // BoardImage의 board변수
+    @OneToMany(mappedBy = "board",      // BoardImage의 board변수
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY
+        )
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
+
+    public void addImage(String uuid, String fileName){
+        BoardImage boardImage = BoardImage.builder()
+                .uuid(uuid)
+                .fileName(fileName)
+                .board(this)
+                .ord(imageSet.size())
+                .build();
+        imageSet.add(boardImage);
+    }
+    public void clearImage(){
+        imageSet.forEach(boardImage -> boardImage.changeBoard(null));
+    }
 
     public void change(String title, String content){
         this.title = title;

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootTest
 @Log4j2
@@ -76,7 +77,20 @@ public class BoardRepositoryTests {
         log.info(result.getNumber());
 
         result.getContent().forEach( boardListReplyCountDTO -> log.info(boardListReplyCountDTO));
+    }
 
+    @Test
+    public void testInsertWithImages(){
+        Board board = Board.builder()
+                .title("Image test")
+                .content("첨부파일 테스트")
+                .writer("tester")
+                .build();
 
+        for(int i = 0 ; i < 3; i++){
+            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+        }
+        boardRepository.save(board);
+        // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
     }
 }
