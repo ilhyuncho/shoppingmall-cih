@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih.controller.test;
 
 
+import com.cih.shoppingmallcih.config.test.DbConfig;
 import com.cih.shoppingmallcih.dto.test.BoardDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
@@ -27,6 +28,8 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    private final DbConfig dbConfig;
+
     @GetMapping("/list")
     public String list(PageRequestDTO pageRequestDTO, Model model){
 
@@ -36,6 +39,9 @@ public class BoardController {
         PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
 
         log.info(responseDTO);
+
+        // DbConfig를 controller 에서 사용한 예
+        log.info(dbConfig.toString());  // UserName: sa, password: password!
 
         model.addAttribute("responseDTO", responseDTO);
         return "/test/board/list";
