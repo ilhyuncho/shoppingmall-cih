@@ -1,12 +1,16 @@
 package com.cih.shoppingmallcih;
 
 import com.cih.shoppingmallcih.common.SampleListener;
+import com.cih.shoppingmallcih.config.test.DbConfig;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.Properties;
 
+@Log4j2
 @SpringBootApplication
 @EnableJpaAuditing
 public class ShoppingmallCihApplication {
@@ -28,8 +32,11 @@ public class ShoppingmallCihApplication {
         // 어플리케이션 컨텍스트가 만들어진 후에 발생하는 이벤트들은 빈으로 등록되어진 리스너를 실행 함
         app.addListeners(new SampleListener()); // 커스텀 이벤트 리스너 추가, 가변인자를 받으므로 여러개의 리스너를 한번에 등록 가능
         app.setDefaultProperties(properties);   // 설정 정보 지정
-        app.run(args);
 
+        ConfigurableApplicationContext applicationContext = app.run(args);
+
+        DbConfig dbConfig = applicationContext.getBean(DbConfig.class); // 설정 정보 빈을 가져옴
+        log.info(dbConfig.toString());  // UserName: sa, password: password!
     }
 
 }
