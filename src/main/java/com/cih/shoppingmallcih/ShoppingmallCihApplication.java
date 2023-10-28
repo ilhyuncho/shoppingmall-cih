@@ -2,9 +2,13 @@ package com.cih.shoppingmallcih;
 
 import com.cih.shoppingmallcih.common.SampleListener;
 import com.cih.shoppingmallcih.config.test.DbConfig;
+import com.cih.shoppingmallcih.config.test.customProperties.AppProperties;
+import com.cih.shoppingmallcih.config.test.customProperties.AppService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -13,6 +17,9 @@ import java.util.Properties;
 @Log4j2
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableConfigurationProperties(AppProperties.class) // @ConfigurtationProperties 애너테이션이 붙어 있는 클래스를 스프링 컨테이너에 등록
+                                                    // AppProperties.class 를 직접 명시 해야 함
+                                                    // @ConfigurationPropertiesScan 을 지정해서 지정된 패키지 하위 클래스를 탐색 할수도 있음
 public class ShoppingmallCihApplication {
 
     public static void main(String[] args) {
@@ -37,6 +44,11 @@ public class ShoppingmallCihApplication {
 
         DbConfig dbConfig = applicationContext.getBean(DbConfig.class); // 설정 정보 빈을 가져옴
         log.info(dbConfig.toString());  // UserName: sa, password: password!
+
+        // 커스텀 프로퍼티 예제
+        AppService appService = applicationContext.getBean(AppService.class);
+        log.info(appService.getAppProperties().toString());
+
     }
 
 }

@@ -81,6 +81,10 @@ dependencies {
     // Thumbnailator (23.10.26)
     implementation 'net.coobird:thumbnailator:0.4.16'
 
+    // configuration-processor (23.10.27)
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+
 }
 
 tasks.named('test') {
