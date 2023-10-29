@@ -84,6 +84,9 @@ dependencies {
     // configuration-processor (23.10.27)
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    // password (23.10.29 )
+    implementation group: 'org.passay', name: 'passay', version: '1.6.4'
+
 
 }
 

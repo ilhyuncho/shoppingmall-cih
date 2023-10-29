@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih;
 
 import com.cih.shoppingmallcih.common.SampleListener;
+import com.cih.shoppingmallcih.common.test.validator.UserVali;
 import com.cih.shoppingmallcih.config.test.DbConfig;
 import com.cih.shoppingmallcih.config.test.customProperties.AppProperties;
 import com.cih.shoppingmallcih.config.test.customProperties.AppService;
@@ -69,7 +70,37 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
 
         Set<ConstraintViolation<Course>> violation = validator.validate(course);
 
-        violation.forEach( a -> log.error("Violation details: [{}],", a));
+        violation.forEach( a -> log.error("Violation details: [{}],", a.getMessage()));
+
+
+        // Password 테스트--------------------------------------------------------
+
+        UserVali user1 = new UserVali("cih1", "sdfsdf");
+
+        Validator validator1 = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<UserVali>> violations = validator1.validate(user1);
+
+        log.error("Password Violation===");
+        violations.forEach( a -> log.error("user1.violation details: [{}].", a.getMessage()));
+
+
+        UserVali user2 = new UserVali("cih1", "sdf01$14UDFdgg");
+
+        validator1 = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validator1.validate(user2);
+
+        log.error("Password Violation===");
+        if(violations.isEmpty()){
+            log.info("password user2 adher to the policy");
+        }
+        else{
+            violations.forEach( a -> log.error("user2.violation details: [{}].", a.getMessage()));
+        }
+
+
+
+
+
 
 
 
