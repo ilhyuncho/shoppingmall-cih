@@ -5,10 +5,16 @@ import com.cih.shoppingmallcih.domain.test.customRepository.CourceRepository;
 import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
@@ -29,7 +35,8 @@ public class CourceRepositoryTests {
     @Test
     @DisplayName("쿼리 메서드 확인 테스트")
     @Transactional
-    @Rollback
+    //@Rollback
+    @Commit
     public void test(){
 
         courceRepository.saveAll(getCourceList());
@@ -61,7 +68,47 @@ public class CourceRepositoryTests {
         Cource javaScriptCompleteGuide = new Cource("JavaScript Complete Guide", "JavaScript", 5, "Master JavaScript with Core Concepts and Web Development");
 
         return Arrays.asList(rapidSpringBootCourse, springSecurityDslCourse, springCloudKubernetesCourse, rapidPythonCourse, gameDevelopmentWithPython, javaScriptForAll, javaScriptCompleteGuide);
-
     }
+    
+    @Test
+    @DisplayName("PagingAndSortingRepository를 사용하는 단위 테스트")
+    void test2(){
+        Pageable pageable = PageRequest.of(0,5);
+        Assertions.assertThat(courceRepository.findAll(pageable)).hasSize(5);
+
+        Pageable nextPageable = pageable.next();
+        Assertions.assertThat(courceRepository.findAll(nextPageable)).hasSize(4);
+    }
+
+    @Test
+    @DisplayName("페이징과 정렬 예제")
+    void test3(){
+        Pageable pageable = PageRequest.of(0,5, Sort.by("Name").ascending());
+
+        Condition<Cource> sortedFirstCourceCondition = new Condition<Cource>(){
+            @Override
+            public boolean matches(Cource value) {
+                return value.getId() == 5 && value.getName().equals("gaagdfgdfg");
+            }
+        };
+
+        Assertions.assertThat(courceRepository.findAll(pageable)).first().has(sortedFirstCourceCondition);
+    }
+
+    @Test
+    void tes4(){
+        // 평점 기준 내림차순, 이름 기준 오름차순
+        Pageable pageable = PageRequest.of(0,5,Sort.by("Rating").descending().and(Sort.by("Name")));
+
+        Condition<Cource> customSortFirstCourceCondition = new Condition<Cource>(){
+            @Override
+            public boolean matches(Cource value){
+                return value.getId() == 108 && value.getName().equals("Getting Started with Python");
+            }
+        };
+
+        Assertions.assertThat(courceRepository.findAll(pageable)).first().has(customSortFirstCourceCondition);
+    }
+
 
 }
