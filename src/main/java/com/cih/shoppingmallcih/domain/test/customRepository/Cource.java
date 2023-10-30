@@ -12,6 +12,15 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+// 단일 @NamedQuery
+//@NamedQuery(name="Cource.findAllByCategoryAndRating",
+//                query = "select c from Cource c where c.category=?1 and c.rating=?2")
+@NamedQueries({
+    @NamedQuery(name="Cource.findAllByRating",
+            query = "select c from Cource c where c.rating=?1"),
+    @NamedQuery(name="Cource.findAllByCategoryAndRating",
+            query = "select c from Cource c where c.category=?1 and c.rating=?2")
+})
 public class Cource {
     @Id
     @Column(name = "ID")

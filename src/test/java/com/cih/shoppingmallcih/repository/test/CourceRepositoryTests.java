@@ -110,5 +110,11 @@ public class CourceRepositoryTests {
         Assertions.assertThat(courceRepository.findAll(pageable)).first().has(customSortFirstCourceCondition);
     }
 
+    @Test
+    @DisplayName("NamedQuery 동작 검증 단위 테스트")
+    void test5(){
+        Assertions.assertThat(courceRepository.findAllByCategoryAndRating("Spring", 4)).hasSize(1);
+    }
+
 
 }
