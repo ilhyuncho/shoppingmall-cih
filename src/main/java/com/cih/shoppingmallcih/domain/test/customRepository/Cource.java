@@ -31,7 +31,7 @@ public class Cource {
     private String description;
 
 
-    public void Course(String name, String category, int rating, String description) {
+    public Cource(String name, String category, int rating, String description) {
         this.name = name;
         this.category = category;
         this.rating = rating;

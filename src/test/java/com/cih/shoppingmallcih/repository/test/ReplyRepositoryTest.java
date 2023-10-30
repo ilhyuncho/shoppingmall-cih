@@ -1,4 +1,4 @@
-package com.cih.shoppingmallcih.repository;
+package com.cih.shoppingmallcih.repository.test;
 
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.reply.Reply;
