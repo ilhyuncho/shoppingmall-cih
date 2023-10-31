@@ -116,5 +116,18 @@ public class CourceRepositoryTests {
         Assertions.assertThat(courceRepository.findAllByCategoryAndRating("Spring", 4)).hasSize(1);
     }
 
+    @Test
+    void test6(){
+        Assertions.assertThat(courceRepository.findAllByRating(5)).hasSize(3);
+    }
+
+    @Test
+    void test7(){
+        courceRepository.updateCourceRatingByName(10, "JavaScript for All");
+
+        Assertions.assertThat(courceRepository.findAllByCategoryAndRatingGreaterThen("JavaScript", 9)).hasSize(1);
+    }
+
+
 
 }
