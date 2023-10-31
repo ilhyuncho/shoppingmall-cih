@@ -28,6 +28,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         QBoard board = QBoard.board;    // Q도메인 객체
 
+        // 2.JPQLQuery 를 이용
         JPQLQuery<Board> query = from(board);
 
         query.where(board.title.contains("1"));

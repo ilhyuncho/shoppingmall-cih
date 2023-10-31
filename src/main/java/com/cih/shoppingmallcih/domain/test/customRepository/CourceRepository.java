@@ -1,8 +1,9 @@
 package com.cih.shoppingmallcih.domain.test.customRepository;
 
-import com.cih.shoppingmallcih.dto.test.Validation.Course;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 
 @Repository
 //public interface CourceRepository extends CrudRepository<Cource, Long> {
-public interface CourceRepository extends PagingAndSortingRepository<Cource, Long> {
+public interface CourceRepository extends PagingAndSortingRepository<Cource, Long>, QuerydslPredicateExecutor<Cource> {
 
     // 쿼리 메서드 -> @Query 로 변경
     @Query("select c from Cource c where c.category=?1")
