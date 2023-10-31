@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih.domain.test.customRepository;
 
 
+import com.cih.shoppingmallcih.domain.test.customRepository.projection.DescriptionOnly;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -43,7 +44,8 @@ public interface CourceRepository extends PagingAndSortingRepository<Cource, Lon
     //@NamedQuery
     Iterable<Cource> findAllByCategoryAndRating(String category, int rating);
 
-
+    // 프로젝션 ( projection ) 예제
+    Iterable<DescriptionOnly> getCourceByName(String name);
 
 
 }

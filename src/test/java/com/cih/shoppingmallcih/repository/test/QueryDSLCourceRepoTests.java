@@ -29,7 +29,7 @@ public class QueryDSLCourceRepoTests {
         QCource cource = QCource.cource;
 
 //        1. JPAQuery 클래스를 이용
-        JPAQuery query1 = new JPAQuery(entityManager);
+        JPAQuery query1 = new JPAQuery(entityManager);  // JPAQuery는 QueryDSL에서 JPA를 사용할 수 있게 해주는 JPQLQuery 인터페이스의 기본 구현체
         query1.from(cource).where(cource.category.eq("Spring"));
 
         Assertions.assertThat(query1.fetch().size()).isEqualTo(3);

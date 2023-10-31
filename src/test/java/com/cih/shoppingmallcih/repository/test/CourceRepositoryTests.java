@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.repository.test;
 
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.domain.test.customRepository.CourceRepository;
+import com.cih.shoppingmallcih.domain.test.customRepository.projection.DescriptionOnly;
 import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
@@ -128,6 +129,13 @@ public class CourceRepositoryTests {
         Assertions.assertThat(courceRepository.findAllByCategoryAndRatingGreaterThen("JavaScript", 9)).hasSize(1);
     }
 
+    @Test
+    void test8(){
+        Iterable<DescriptionOnly> result = courceRepository.getCourceByName("Rapid Spring Boot Application Development");
+
+        Assertions.assertThat(result).extracting("description")
+                .contains("Spring Boot gives all the power of the Spring Framework without all of the complexity");
+    }
 
 
 }
