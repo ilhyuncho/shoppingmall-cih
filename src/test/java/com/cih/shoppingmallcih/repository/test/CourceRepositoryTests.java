@@ -131,6 +131,7 @@ public class CourceRepositoryTests {
 
     @Test
     void test8(){
+        // 프로젝션 테스트
         Iterable<DescriptionOnly> result = courceRepository.getCourceByName("Rapid Spring Boot Application Development");
 
         Assertions.assertThat(result).extracting("description")

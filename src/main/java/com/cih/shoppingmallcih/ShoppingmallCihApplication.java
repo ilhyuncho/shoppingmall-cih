@@ -3,10 +3,12 @@ package com.cih.shoppingmallcih;
 import com.cih.shoppingmallcih.common.SampleListener;
 import com.cih.shoppingmallcih.common.test.validator.UserVali;
 import com.cih.shoppingmallcih.config.test.DbConfig;
+import com.cih.shoppingmallcih.config.test.autoConfig.RelationDatabaseCondition;
 import com.cih.shoppingmallcih.config.test.customProperties.AppProperties;
 import com.cih.shoppingmallcih.config.test.customProperties.AppService;
 import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -50,11 +52,21 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
         ConfigurableApplicationContext applicationContext = app.run(args);
 
         DbConfig dbConfig = applicationContext.getBean(DbConfig.class); // 설정 정보 빈을 가져옴
-        log.info(dbConfig.toString());  // UserName: sa, password: password!
+        log.warn("dbConfig.toString() : " + dbConfig.toString());  // UserName: sa, password: password!
 
         // 커스텀 프로퍼티 예제
         AppService appService = applicationContext.getBean(AppService.class);
-        log.info(appService.getAppProperties().toString());
+        log.warn("appService.getAppProperties() : " + appService.getAppProperties().toString());
+
+
+        // @Conditional(RelationDatabaseCondition.class) 빈 생성 확인 테스트 코드
+        try {   // 예외처리는 테스트용으로 작성 함
+            RelationDatabaseCondition rdCondition = applicationContext.getBean(RelationDatabaseCondition.class);
+            log.warn("bean RelationDatabaseCondition : " + rdCondition);
+        }catch (NoSuchBeanDefinitionException e){
+            log.error(e.getMessage());
+        }
+
 
     }
 
