@@ -26,7 +26,11 @@ public class OtherEventListener {
     }
 
     @EventListener(ContextRefreshedEvent.class)
-    public void onContextRefreshedEvent(ContextRefreshedEvent event) {
+    public void onContextRefreshedEvent(ContextRefreshedEvent event)
+    {
+        // ApplicationContext 가 갱신되면 ContextRefreshedEvent를 발행한다.
+
+
         log.info("@@@ onContextRefreshedEvent !!!");
     }
 
