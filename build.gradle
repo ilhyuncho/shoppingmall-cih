@@ -50,6 +50,9 @@ dependencies {
     // Thymeleaf java8time
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
 
+    // actuator (23.11.04)
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     // log4j2 ( 23.10.10 )
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
@@ -84,7 +87,7 @@ dependencies {
     // configuration-processor (23.10.27)
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    // password (23.10.29 )
+    // password (23.10.29)
     implementation group: 'org.passay', name: 'passay', version: '1.6.4'
 
 
