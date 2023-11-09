@@ -74,7 +74,7 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Course course = new Course();
         course.setId(1);
-        course.setRating(0);
+        course.setRating(3);
 
         log.info("validation start------------------------");
 
@@ -92,7 +92,7 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
         Validator validator1 = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<UserVali>> violations = validator1.validate(user1);
 
-        log.error("Password Violation===");
+        log.error("Password Violation1===");
         violations.forEach( a -> log.error("user1.violation details: [{}].", a.getMessage()));
 
 
@@ -101,7 +101,7 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
         validator1 = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validator1.validate(user2);
 
-        log.error("Password Violation===");
+        log.error("Password Violation2===");
         if(violations.isEmpty()){
             log.info("password user2 adher to the policy");
         }
