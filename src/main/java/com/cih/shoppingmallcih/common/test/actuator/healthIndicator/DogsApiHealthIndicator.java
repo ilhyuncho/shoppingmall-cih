@@ -1,4 +1,4 @@
-package com.cih.shoppingmallcih.common.test.healthIndicator;
+package com.cih.shoppingmallcih.common.test.actuator.healthIndicator;
 
 
 import org.springframework.boot.actuate.health.Health;
