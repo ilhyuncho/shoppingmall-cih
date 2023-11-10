@@ -1,6 +1,8 @@
 package com.cih.shoppingmallcih;
 
 import com.cih.shoppingmallcih.common.SampleListener;
+import com.cih.shoppingmallcih.common.test.actuator.CustomEndpoint.ReleaseItem;
+import com.cih.shoppingmallcih.common.test.actuator.CustomEndpoint.ReleaseNote;
 import com.cih.shoppingmallcih.common.test.validator.UserVali;
 import com.cih.shoppingmallcih.config.test.DbConfig;
 import com.cih.shoppingmallcih.config.test.autoConfig.RelationDatabaseCondition;
@@ -15,11 +17,15 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -108,13 +114,39 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
         else{
             violations.forEach( a -> log.error("user2.violation details: [{}].", a.getMessage()));
         }
-
-
-
-
-
-
-
-
     }
+
+    @Bean(name="releaseNotes")
+    public Collection<ReleaseNote> loadReleaseNotes(){
+        Set<ReleaseNote> releaseNotes = new LinkedHashSet<>();
+
+        ReleaseNote releaseNote1 = ReleaseNote.builder()
+                .version("v1.2.1")
+                .releaseDate(LocalDate.of(2021,12,30))
+                .commitTag("a5343d")
+                .bugFixes(Set.of(getReleaseItem("SBIP-132", "the name @299d3"),
+                        getReleaseItem("SBIP-134", "dfgfgfg #gfgfg")
+                        )).build();
+
+        ReleaseNote releaseNote2 = ReleaseNote.builder()
+                .version("v1.2.0")
+                .releaseDate(LocalDate.of(2021,11,5))
+                .commitTag("b5df343d")
+                .bugFixes(Set.of(getReleaseItem("SBIP-132", "the name11 @123"),
+                        getReleaseItem("SBIP-134", "dfgfgddfg #gfgfg33")
+                )).build();
+
+        releaseNotes.addAll(Set.of(releaseNote1, releaseNote2));
+
+        return releaseNotes;
+    }
+
+    private ReleaseItem getReleaseItem(String itemId, String itemDescription) {
+        return ReleaseItem
+                .builder()
+                .itemId(itemId)
+                .itemDescription(itemDescription)
+                .build();
+    }
+
 }
