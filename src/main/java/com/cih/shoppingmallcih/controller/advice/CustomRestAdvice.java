@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+// RestControllerAdvice = ControllerAdvice + ResponseBody
 @RestControllerAdvice   // 컨트롤러에서 발생하는 예외에 대해 JSON과 같은 순수한 응답 메시지를 보낼수 있다.
 @Log4j2
 public class CustomRestAdvice {

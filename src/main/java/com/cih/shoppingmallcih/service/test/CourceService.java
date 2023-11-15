@@ -6,9 +6,26 @@ import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 public interface CourceService {
 
-    public Iterable<Cource> getAvailableCources();
+    Iterable<Cource> getAvailableCources();
+
+    Cource createCource(Cource cource);
+
+    Optional<Cource> getCourceById(Long courceId);
+
+    Iterable<Cource> getCourcesByCategory(String category);
+
+    Iterable<Cource> getCources();
+
+    Cource updateCource(Long courceId, Cource cource);
+
+    void deleteCourceById(Long courceId);
+
+    void deleteCources();
+
 
    }
