@@ -6,16 +6,9 @@ import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class CourceService {
-    private CourceRepository courceRepository;
 
-    @Autowired
-    public CourceService(CourceRepository courceRepository) {
-        this.courceRepository = courceRepository;
-    }
+public interface CourceService {
 
-    public Iterable<Cource> getAvailableCources() {
-        return courceRepository.findAll();
-    }
-}
+    public Iterable<Cource> getAvailableCources();
+
+   }
