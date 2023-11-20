@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.MockMvc;
 
 
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
+import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import com.cih.shoppingmallcih.service.test.CourceService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,6 +64,37 @@ public class CourceApiApplicationTests {
 
         Integer id =  JsonPath.parse(response.getContentAsString()).read("$.id");
         assertNotNull(courceService.getCourceById(Long.valueOf(id)));
+    }
+
+    @Test
+    public void testRetrieveCourse() throws Exception{
+        Cource cource = Cource.builder().name("Padfsgdfg1")
+                .category("Spring")
+                .rating(5)
+                .description("gdfgexdfsdfsdfsdf1").build();
+
+        ObjectMapper objectMapper = new ObjectMapper(); // Cource인스턴스를 Json으로 직렬화 할때 사용
+
+        MockHttpServletResponse response = mockMvc.perform(post("/cources")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(cource)))
+                .andDo(print())
+                .andExpect(jsonPath("$.*", hasSize(5)))
+                .andExpect(jsonPath("$.id", greaterThan(0)))
+                .andExpect(jsonPath("$.name").value("Padfsgdfg1"))
+                .andExpect(jsonPath("$.category").value("Spring"))
+                .andExpect(jsonPath("$.rating").value(5))
+                .andReturn().getResponse();
+
+        Integer id = JsonPath.parse(response.getContentAsString()).read("$.id");
+        mockMvc.perform(get("/cources/{id}",id))
+                .andDo(print())
+                .andExpect(jsonPath("$.*", hasSize(5)))
+                .andExpect(jsonPath("$.id", greaterThan(0)))
+                .andExpect(jsonPath("$.name").value("Padfsgdfg1"))
+                .andExpect(jsonPath("$.category").value("Spring"))
+                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(status().isOk());
     }
 
 
