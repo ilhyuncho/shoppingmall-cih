@@ -31,7 +31,6 @@ import java.util.Set;
 
 @Log4j2
 @SpringBootApplication
-@EnableJpaAuditing
 @EnableConfigurationProperties(AppProperties.class) // @ConfigurtationProperties 애너테이션이 붙어 있는 클래스를 스프링 컨테이너에 등록
                                                     // AppProperties.class 를 직접 명시 해야 함
                                                     // @ConfigurationPropertiesScan 을 지정해서 지정된 패키지 하위 클래스를 탐색 할수도 있음
