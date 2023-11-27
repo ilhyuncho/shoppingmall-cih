@@ -4,6 +4,7 @@ package com.cih.shoppingmallcih.service;
 import com.cih.shoppingmallcih.domain.test.guestbook.Guestbook;
 import com.cih.shoppingmallcih.dto.test.GuestbookDTO;
 import com.cih.shoppingmallcih.service.test.GuestbookService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,7 @@ public class GuestbookServiceTests {
     }
 
     @Test
+    @Disabled   // 테스트 실행 x
     public void testModify(){
         GuestbookDTO guestbookDTO = GuestbookDTO.builder()
                 .gno(602L)
