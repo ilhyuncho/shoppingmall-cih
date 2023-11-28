@@ -5,6 +5,7 @@ import com.cih.shoppingmallcih.domain.test.product.ProductRepository;
 import com.cih.shoppingmallcih.dto.test.product.ProductDTO;
 import com.cih.shoppingmallcih.dto.test.product.ProductResponseDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +13,21 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
     private final ModelMapper modelMapper;
+
 
     @Override
     public ProductResponseDTO getProduct(Long productID){
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
 
         Optional<Product> result = productRepository.findById(productID);
+
+        System.out.println("call getProduct!~~~~~~~~~~~~~~~~~~");
+
 
         if(result.isPresent()){
             Product product = result.get();
