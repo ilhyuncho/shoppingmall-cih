@@ -10,11 +10,16 @@ import com.cih.shoppingmallcih.service.test.ProductServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
@@ -22,16 +27,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(SpringExtension.class)  // 스프링에서 객체를 주입받기위해. Spring TestContext Framework와 Junit5와 통합하여 사용
+@Import({ProductServiceImpl.class}) // @Autowired로 주입받는 ProductService를 주입 받기 위해
 public class ProductServiceTests {
 
-    private final ProductRepository productRepository = Mockito.mock(ProductRepository.class);
-    private final ModelMapper modelMapper = new ModelMapper();
-    private ProductServiceImpl productService;
+    //private final ProductRepository productRepository = Mockito.mock(ProductRepository.class);
 
-    @BeforeEach
-    public void setUpTest(){
-        productService = new ProductServiceImpl(productRepository ,modelMapper);
-    }
+    @MockBean       // 스프링에 mock객체를 등록해서 주입받는 형식
+    ProductRepository productRepository;
+
+    //private ProductServiceImpl productService;
+    @Autowired
+    ProductService productService;
+
+    private final ModelMapper modelMapper = new ModelMapper();
+
+
+//    @BeforeEach
+//    public void setUpTest(){
+//        productService = new ProductServiceImpl(productRepository ,modelMapper);
+//    }
 
     @Test
     void getProductTest(){
@@ -70,8 +85,6 @@ public class ProductServiceTests {
         Assertions.assertEquals(productResponseDTO.getStock(),123);
 
         verify(productRepository).save(any());
-
-
     }
 
 

@@ -17,8 +17,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
-    private final ModelMapper modelMapper;
-
 
     @Override
     public ProductResponseDTO getProduct(Long productID){
@@ -43,6 +41,8 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductResponseDTO saveProduct(ProductDTO productDTO) {
 
+        ModelMapper modelMapper = new ModelMapper();
+
         Product product = modelMapper.map(productDTO, Product.class);
 
         Product result = productRepository.save(product);
@@ -54,6 +54,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponseDTO changeProductName(Long productID, String name) throws Exception {
+
+        ModelMapper modelMapper = new ModelMapper();
 
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
 
