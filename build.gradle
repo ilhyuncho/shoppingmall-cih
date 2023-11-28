@@ -62,6 +62,8 @@ dependencies {
 
     // spring security (23.10.11 )
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    // for @WithMockUser
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test'
 
     // JPA-querydql start
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
