@@ -16,7 +16,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
     public BoardSearchImpl(){
         super(Board.class);
-    }
+    }   // for QuerydslRepositorySupport
 
 //    public boardSearchImpl(Class<?> domainClass) {
 //        super(domainClass);
