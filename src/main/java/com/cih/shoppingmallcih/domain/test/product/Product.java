@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)    // callSuper : 부모 클래스의 필드를 포함하는 역할을 수행
 @ToString(exclude = "name")
 @Table(name="product")
 public class Product extends BaseEntity {

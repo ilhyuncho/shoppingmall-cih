@@ -11,8 +11,9 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
+@MappedSuperclass   // JPA의 엔티티 클래스가 상속받을 경우 자식 클래스에서 매핑 정보를 전달
 @EntityListeners(value = { AuditingEntityListener.class})   // 해당 클래스에 Auditing 기능을 포함
+            // 엔티티를 db에 적용하기 전후로 콜백을 요청할 수 있게 하는 어노테이션
 @Getter
 public abstract class BaseEntity {
 
