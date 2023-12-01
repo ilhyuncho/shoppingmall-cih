@@ -30,7 +30,4 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Integer stock;
 
-//    private LocalDateTime createdAt;
-//    private LocalDateTime updatedAt;
-
 }
