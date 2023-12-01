@@ -35,8 +35,8 @@ public class ProductDetailRepositoryTest {
 
         productDetailRepository.save(productDetail);
 
-        System.out.println("savedProduct1:" + productRepository.findById(
-                product.getNumber()).get());
+//        System.out.println("savedProduct1:" + productRepository.findById(
+//                product.getNumber()).get());
 
         System.out.println("savedProduct2:" + productDetailRepository.findById(
                 productDetail.getId()).get().getProduct());

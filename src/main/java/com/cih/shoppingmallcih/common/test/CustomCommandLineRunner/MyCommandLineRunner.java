@@ -28,7 +28,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
         Arrays.stream(args).forEach(String -> System.out.println());
 
         // 테스트
-        testBoardRepository();
+        //testBoardRepository();
     }
 
     private void testBoardRepository(){
