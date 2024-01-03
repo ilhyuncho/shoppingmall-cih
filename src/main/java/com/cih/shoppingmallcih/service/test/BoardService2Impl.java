@@ -23,9 +23,8 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 @Transactional
-//@Primary    // [동일 빈 우선순위 지정 방법 1]BoardService2Impl 빈 중 우선순위를 두겠다는 의미
-@Qualifier("first") // [동일 빈 우선순위 지정 방법 2]
-public class BoardServiceImpl implements BoardService{
+@Qualifier("second")
+public class BoardService2Impl implements BoardService{
 
     private final ModelMapper modelMapper;
 

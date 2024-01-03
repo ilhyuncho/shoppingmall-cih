@@ -9,6 +9,7 @@ import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
 import com.cih.shoppingmallcih.service.test.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class BoardController {
 
+    @Qualifier("first")
     private final BoardService boardService;
 
     private final DbConfig dbConfig;

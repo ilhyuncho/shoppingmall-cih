@@ -2,13 +2,9 @@ package com.cih.shoppingmallcih.MockMvc;
 
 
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
-import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import com.cih.shoppingmallcih.service.test.CourceService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc   // MockMVC프레임워크가 자동 구성되어 편리하게 MockMVc인스턴스를 주입 받아서 테스트 할수 있다.
 @ExtendWith(SpringExtension.class)  // JUnit5의 주피터 프로그래밍 모델과 스프링 테스트 컨텍스트 프레임워크를 함께 테스트에 사용할 수 있다
+                                    // JUnit5버전에서 'spring-test'를 이용하기 위한 설정
 public class CourceApiApplicationTests {
 
     @Autowired
