@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,7 +34,9 @@ public class BoardController {
     private final DbConfig dbConfig;
 
     @GetMapping("/list")
-    public String list(PageRequestDTO pageRequestDTO, Model model){
+    public String list(@ModelAttribute("dto") PageRequestDTO pageRequestDTO, Model model){
+        //@ModelAttribute 를 지정하면. JSP 파일에서 PageRequestDTO 명 말고 dto로 접근 가능
+        // 근데 굳이 지정할 필요는 없을듯.
 
         log.info(pageRequestDTO);
 

@@ -13,7 +13,7 @@
           Board List
 
 <!--          HTML 테그의 속성이 아니라 HTML 콘텐츠 영역안에서 직접 데이터를 출력하고 싶으면 다음과 같이 [[...]] 를 사용하면 됩니다.-->
-          [[${pageRequestDTO.size}]]
+          [[${dto.size}]]
         </div>
         <div class="card-body">
           <h5 class="card-title">Board List</h5>
@@ -22,20 +22,20 @@
           <div  class="row mt-3">
             <form action="/board/list" method="get">
               <div class="col">
-                <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+                <input type="hidden" name="size" th:value="${dto.size}">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <select class="form-select" name="type">
                       <option value="">-----</option>
-                      <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
-                      <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
-                      <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
-                      <option value="tc" th:selected="${pageRequestDTO.type == 'w'}">제목,내용</option>
-                      <option value="tcw" th:selected="${pageRequestDTO.type == 'w'}">제목,내용,작성자</option>
+                      <option value="t" th:selected="${dto.type == 't'}">제목</option>
+                      <option value="c" th:selected="${dto.type == 'c'}">내용</option>
+                      <option value="w" th:selected="${dto.type == 'w'}">작성자</option>
+                      <option value="tc" th:selected="${dto.type == 'w'}">제목,내용</option>
+                      <option value="tcw" th:selected="${dto.type == 'w'}">제목,내용,작성자</option>
                     </select>
                   </div>
 
-                  <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                  <input type="text" class="form-control" name="keyword" th:value="${dto.keyword}">
 
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary searchBtn" type="submit">Search</button>
@@ -58,7 +58,7 @@
             </tr>
             </thead>
 
-            <tbody th:with="link = ${pageRequestDTO.getLink()}">
+            <tbody th:with="link = ${dto.getLink()}">
               <tr th:each="dto:${responseDTO.dtoList}">
                 <th scope="row">[[${dto.bno}]]</th>
 
