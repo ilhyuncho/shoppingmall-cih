@@ -21,4 +21,8 @@ public class MybatisService {
         return timeMapper.getGuestBook();
     }
 
+    public void insertGuestBook(GuestbookDTO dto){
+        timeMapper.insert(dto);
+    }
+
 }

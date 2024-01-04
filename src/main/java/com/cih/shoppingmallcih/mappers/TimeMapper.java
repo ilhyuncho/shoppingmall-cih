@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface TimeMapper {
     String getNow();
     GuestbookDTO getGuestBook();
+
+    void insert(GuestbookDTO dto);
 }

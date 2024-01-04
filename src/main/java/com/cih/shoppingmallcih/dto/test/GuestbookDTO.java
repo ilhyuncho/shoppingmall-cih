@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Builder
@@ -14,11 +15,12 @@ import java.time.LocalDateTime;
 @Data
 public class GuestbookDTO {
     private Long gno;
+
+    @NotEmpty
     private String title;
     private String content;
     private String writer;
-    private LocalDateTime regDate, modDate;
 
-
-
+    private LocalDateTime regDate;
+    private LocalDateTime modDate;
 }

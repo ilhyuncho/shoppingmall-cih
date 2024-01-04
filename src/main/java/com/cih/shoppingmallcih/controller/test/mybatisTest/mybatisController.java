@@ -5,8 +5,12 @@ import com.cih.shoppingmallcih.service.test.mybatisTest.MybatisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/mybatis")
@@ -29,6 +33,12 @@ public class mybatisController {
         log.info("guestbookDTO!!!!!!!!!!!! : " + dto);
         return dto;
     }
-
-
+    @PostMapping("/guestbook")
+    public String insertGuestBook(GuestbookDTO dto, RedirectAttributes redirectAttributes){
+        dto.setModDate(LocalDateTime.now());
+        dto.setRegDate(LocalDateTime.now());
+        log.error(dto.toString());
+        mybatisService.insertGuestBook(dto);
+        return "redirect:/guestbook/list";
+    }
 }
