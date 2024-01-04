@@ -35,7 +35,7 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(@ModelAttribute("dto") PageRequestDTO pageRequestDTO, Model model){
-        //@ModelAttribute 를 지정하면. JSP 파일에서 PageRequestDTO 명 말고 dto로 접근 가능
+        //@ModelAttribute 를 지정하면. JSP 파일에서 PageRequestDTO 명 말고 ${dto}로 접근 가능
         // 근데 굳이 지정할 필요는 없을듯.
 
         log.info(pageRequestDTO);
