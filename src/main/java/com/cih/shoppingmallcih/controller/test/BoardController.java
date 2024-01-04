@@ -79,6 +79,9 @@ public class BoardController {
         // 일회성으로 데이터를 전송 할때 사용
         redirectAttributes.addFlashAttribute("result", bno);
 
+        // 쿼리 스트링으로 처리 , 브라우저 경로에 보임
+        //redirectAttributes.addAttribute("adAttribute-value", "abcdf");
+
         return "redirect:/board/list";
     }
 
