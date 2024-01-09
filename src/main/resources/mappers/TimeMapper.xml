@@ -7,11 +7,15 @@
         select now()
     </select>
     <select id="getGuestBook" resultType="com.cih.shoppingmallcih.dto.test.GuestbookDTO">
-        SELECT * FROM guestbook
+        SELECT * FROM guestbook where gno = 1
     </select>
 
     <insert id="insert">
         insert into guestbook(content,title,writer,regDate,modDate)
         values( #{content}, #{title}, #{writer}, #{regDate},#{modDate})
     </insert>
+
+    <select id="selectAll" resultType="com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO">
+        select * from guestbook order by gno desc
+    </select>
 </mapper>

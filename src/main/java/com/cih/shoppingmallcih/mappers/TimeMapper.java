@@ -1,7 +1,10 @@
 package com.cih.shoppingmallcih.mappers;
 
 import com.cih.shoppingmallcih.dto.test.GuestbookDTO;
+import com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TimeMapper {
@@ -9,4 +12,6 @@ public interface TimeMapper {
     GuestbookDTO getGuestBook();
 
     void insert(GuestbookDTO dto);
+
+    List<GuestbookVO> selectAll();
 }
