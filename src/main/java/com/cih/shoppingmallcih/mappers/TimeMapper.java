@@ -13,6 +13,7 @@ public interface TimeMapper {
     void insert(GuestbookDTO dto);
     List<GuestbookVO> selectAll();
     GuestbookVO selectOne(Long gno);
-
     void delete(Long gno);
+    void update(GuestbookVO vo);
+
 }

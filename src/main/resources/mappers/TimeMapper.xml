@@ -26,4 +26,8 @@
     <delete id="delete">
         delete from guestbook where gno = #{gno}
     </delete>
+
+    <update id="update">
+        update guestbook set content = #{content} where gno = #{gno}
+    </update>
 </mapper>

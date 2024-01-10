@@ -39,12 +39,12 @@
 
             <div class="input-group mb-3">
               <span class="input-group-text">RegDate</span>
-              <input type="text" name="regDate" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+              <input type="text"  class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
             </div>
 
             <div class="input-group mb-3">
-              <span class="input-group-text">ModeDate</span>
-              <input type="text" name="modeDate" class="form-control" th:value="${#temporals.format(dto.modDate,'yyyy-MM-dd HH:mm:ss')}" readonly>
+              <span class="input-group-text">ModDate</span>
+              <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate,'yyyy-MM-dd HH:mm:ss')}" readonly>
             </div>
 
             <div class="my-4">
@@ -55,16 +55,11 @@
               </div>
             </div>
           </form>
-<!--          <script>-->
-<!--            document.querySelector(".btn-guestbook-list").addEventListener("click", function(e){-->
+          <script>
 
-<!--              e.preventDefault()-->
-<!--              e.stopPropagation()-->
 
-<!--              self.location = "/mybatis/list";-->
-<!--            },false)-->
 
-<!--          </script>-->
+          </script>
 
 
         </div><!--end card body-->
@@ -77,6 +72,24 @@
 
 <script layout:fragment="script" th:inline="javascript">
 
+  // 에러 처리 부분
+  const errors = [[${errors}]]
+  console.log(errors)
+
+  let errorMsg = ''
+  if(errors){
+    for(let i = 0; i < errors.length; i++){
+      errorMsg += `${errors[i].field}은 ${errors[i].code} \n`
+    }
+
+    // param ( 1: 바뀐 주소와 함께 저장할 객체, 2: 바꿀 제목, 3: 바꿀 주소 )
+    // https://www.zerocho.com/category/HTML&DOM/post/599d2fb635814200189fe1a7
+    history.replaceState({}, null, null)
+
+    alert(errorMsg)
+  }
+
+
   document.querySelector(".btn-guestbook-list").addEventListener("click", function(e){
     e.preventDefault()
     e.stopPropagation()
@@ -84,9 +97,6 @@
     self.location = "/mybatis/list";
   },false)
 
-  document.querySelector(".btn-guestbook-modify").addEventListener("click", function(e){
-    self.location = "/mybatis/modify?gno=" + [[${dto.gno}]]
-  },false)
 
   // 내용 삭제
   const formObj = document.querySelector("form")
@@ -97,6 +107,18 @@
     console.log("form remove~~~~~~~~~~`")
 
     formObj.action = "/mybatis/remove"
+    formObj.method = "post"
+
+    formObj.submit()
+  }, false);
+
+  document.querySelector(".btn-secondary").addEventListener("click", function(e){
+    e.preventDefault()
+    e.stopPropagation()
+
+    console.log("form modify~~~~~~~~~~`")
+
+    formObj.action = "/mybatis/modify"
     formObj.method = "post"
 
     formObj.submit()

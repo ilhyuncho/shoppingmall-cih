@@ -36,16 +36,18 @@ public class MybatisService {
                 .map(vo-> modelMapper.map(vo, GuestbookDTO.class))
                 .collect(Collectors.toList());
     }
-
     public GuestbookDTO getOne(Long gno){
+
         GuestbookVO guestbookVO = timeMapper.selectOne(gno);
 
         GuestbookDTO dto = modelMapper.map(guestbookVO, GuestbookDTO.class);
         return dto;
     }
-
     public void remove(Long gno){
         timeMapper.delete(gno);
     }
-
+    public void modify(GuestbookDTO guestbookDTO){
+        GuestbookVO vo = modelMapper.map(guestbookDTO, GuestbookVO.class);
+        timeMapper.update(vo);
+    }
 }

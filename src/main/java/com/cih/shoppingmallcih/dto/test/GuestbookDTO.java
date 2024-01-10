@@ -18,7 +18,10 @@ public class GuestbookDTO {
 
     @NotEmpty
     private String title;
+
+    @NotEmpty
     private String content;
+
     private String writer;
 
     private LocalDateTime regDate;
