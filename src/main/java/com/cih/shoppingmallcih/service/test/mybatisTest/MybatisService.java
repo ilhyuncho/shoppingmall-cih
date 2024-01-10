@@ -44,4 +44,8 @@ public class MybatisService {
         return dto;
     }
 
+    public void remove(Long gno){
+        timeMapper.delete(gno);
+    }
+
 }

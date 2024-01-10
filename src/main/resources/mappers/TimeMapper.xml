@@ -22,4 +22,8 @@
     <select id="selectOne" resultType="com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO">
         select * from guestbook where gno = #{gno}
     </select>
+
+    <delete id="delete">
+        delete from guestbook where gno = #{gno}
+    </delete>
 </mapper>

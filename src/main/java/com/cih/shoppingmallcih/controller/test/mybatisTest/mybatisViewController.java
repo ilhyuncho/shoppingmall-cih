@@ -7,7 +7,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,7 +23,7 @@ public class mybatisViewController {
     private final MybatisService mybatisService;
 
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(Model model) {
         log.info("guestbook1 list.....");
         List<GuestbookDTO> result = mybatisService.getAll();
 
@@ -33,12 +35,12 @@ public class mybatisViewController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public String read(HttpServletRequest request, Long gno, Model model){
+    public String read(HttpServletRequest request, Long gno, Model model) {
 
         String requestURI = request.getRequestURI();
 
         GuestbookDTO dto = mybatisService.getOne(gno);
-        log.info(requestURI);
+        log.info("dto : " + dto);
 
         model.addAttribute("dto", dto);
 
@@ -47,6 +49,16 @@ public class mybatisViewController {
         String result = requestURI.substring(target_num);
 
         return "/test/guestbook" + result;
+    }
+
+    @PostMapping("/remove")
+    public String remove(Long gno, RedirectAttributes redirectAttributes) {
+        log.info("---------remove--------------");
+        log.info("gno: " + gno);
+
+        mybatisService.remove(gno);
+
+        return "redirect:/mybatis/list";
     }
 
 }
