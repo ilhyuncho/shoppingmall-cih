@@ -10,8 +10,7 @@ import java.util.List;
 public interface TimeMapper {
     String getNow();
     GuestbookDTO getGuestBook();
-
     void insert(GuestbookDTO dto);
-
     List<GuestbookVO> selectAll();
+    GuestbookVO selectOne(Long gno);
 }

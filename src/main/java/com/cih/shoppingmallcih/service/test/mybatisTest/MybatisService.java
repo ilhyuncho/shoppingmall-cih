@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih.service.test.mybatisTest;
 
 
+import com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO;
 import com.cih.shoppingmallcih.dto.test.GuestbookDTO;
 import com.cih.shoppingmallcih.mappers.TimeMapper;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,13 @@ public class MybatisService {
         return timeMapper.selectAll().stream()
                 .map(vo-> modelMapper.map(vo, GuestbookDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public GuestbookDTO getOne(Long gno){
+        GuestbookVO guestbookVO = timeMapper.selectOne(gno);
+
+        GuestbookDTO dto = modelMapper.map(guestbookVO, GuestbookDTO.class);
+        return dto;
     }
 
 }

@@ -20,4 +20,9 @@ public class GuestbookMapperTests {
         List<GuestbookVO> list = timeMapper.selectAll();
         list.forEach(log::info);
     }
+    @Test
+    public void testSelectOne(){
+        GuestbookVO guestbookVO = timeMapper.selectOne(1L);
+        log.info(guestbookVO);
+    }
 }

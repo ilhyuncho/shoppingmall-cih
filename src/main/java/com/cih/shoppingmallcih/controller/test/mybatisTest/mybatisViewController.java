@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -31,5 +32,21 @@ public class mybatisViewController {
         return "/test/guestbook/list2";
     }
 
+    @GetMapping({"/read", "/modify"})
+    public String read(HttpServletRequest request, Long gno, Model model){
+
+        String requestURI = request.getRequestURI();
+
+        GuestbookDTO dto = mybatisService.getOne(gno);
+        log.info(requestURI);
+
+        model.addAttribute("dto", dto);
+
+        //requestURI = mybatis/read
+        int target_num = requestURI.lastIndexOf("/");
+        String result = requestURI.substring(target_num);
+
+        return "/test/guestbook" + result;
+    }
 
 }

@@ -18,4 +18,8 @@
     <select id="selectAll" resultType="com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO">
         select * from guestbook order by gno desc
     </select>
+
+    <select id="selectOne" resultType="com.cih.shoppingmallcih.domain.test.guestbook.GuestbookVO">
+        select * from guestbook where gno = #{gno}
+    </select>
 </mapper>
