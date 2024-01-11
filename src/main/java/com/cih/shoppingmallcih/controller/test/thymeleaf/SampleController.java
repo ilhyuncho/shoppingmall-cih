@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 @Controller
 @RequestMapping("/test/thymeleaf")
@@ -20,8 +20,10 @@ import java.util.stream.LongStream;
 public class SampleController {
 
     @GetMapping("/ex1")
-    public void ex1(){
+    public void ex1(Model model){
 
+        List<String> list = Arrays.asList("aaa","bbb","ccc");
+        model.addAttribute("list", list);
         log.info("ex1.........");
     }
 

@@ -7,6 +7,23 @@
 </head>
 
 <body>
-    <h1 th:text="${'Hello world'}"></h1>
+    <h1 th:text="${list}"></h1>
+    <div th:with="num1 = 20, num2 = ${30}">
+        <h3 th:text="${num1 + num2}"></h3>
+    </div>
+    <ul>
+        <li th:each="str:${list}" th:text="${str}"></li>
+    </ul>
+    <ul>
+        <th:block th:each="str:${list}">
+            <li>[[${str}]]</li>
+        </th:block>
+    </ul>
+    <ul>
+        <li th:each="str, status:${list}">
+            [[${status.index}]] - [[${str}]]
+        </li>
+    </ul>
 </body>
+
 </html>
