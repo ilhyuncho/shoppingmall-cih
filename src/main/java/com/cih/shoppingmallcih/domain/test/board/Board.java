@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor
 @ToString
 public class Board extends BaseEntity {
 

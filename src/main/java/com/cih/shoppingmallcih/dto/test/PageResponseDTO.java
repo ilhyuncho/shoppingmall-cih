@@ -25,6 +25,7 @@ public class PageResponseDTO<E> {
     private List<E> dtoList;
 
     @Builder(builderMethodName = "withAll")
+    //  builder 대신 다름으로 대체. PageResponseDTO.<ReplyDTO>withAll()
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total){
 
         if(total <= 0){

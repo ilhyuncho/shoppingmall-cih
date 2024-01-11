@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.domain.test.board;
 
+import com.cih.shoppingmallcih.domain.test.board.SearchQuerydsl.BoardSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -10,7 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 
-public interface BoardRepository extends JpaRepository<Board, Long>,  BoardSearch {
+public interface BoardRepository extends JpaRepository<Board, Long>,
+        BoardSearch {   //Querydsl(3)
 
     @Query(value= "select now()" , nativeQuery = true)
     String getTime();

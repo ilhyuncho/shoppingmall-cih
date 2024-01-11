@@ -1,5 +1,7 @@
-package com.cih.shoppingmallcih.domain.test.board;
+package com.cih.shoppingmallcih.domain.test.board.SearchQuerydsl;
 
+import com.cih.shoppingmallcih.domain.test.board.Board;
+import com.cih.shoppingmallcih.domain.test.board.QBoard;
 import com.cih.shoppingmallcih.domain.test.reply.QReply;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -12,6 +14,10 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
+//Querydsl
+//Querydsl(2) - 반드시 '인터페이스 이름 + impl'로
+// QuerydslRepositorySupport 를 부모 클래스로 지정,
+// BoardSearch 인터페이스 구현
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch {
 
     public BoardSearchImpl(){
@@ -33,13 +39,17 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         query.where(board.title.contains("1"));
 
-        // paging
+        // paging 처리
+        // BoardSearchImpl이 상속한 QuerydslRepositorySupport 라는 클래스의 기능을 이용
         this.getQuerydsl().applyPagination(pageable, query);
+        // paging 처리
+
+
 
         List<Board> list = query.fetch();   // 쿼리 실행
-        Long count = query.fetchCount();    // count 쿼리 
+        long count = query.fetchCount();    // count 쿼리
 
-        return null;
+        return new PageImpl<>(list, pageable, count);
     }
 
     @Override
@@ -48,7 +58,8 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         QBoard board = QBoard.board;
         JPQLQuery<Board> query = from(board);
 
-        if( (types != null && types.length >0) && keyword != null){
+        if( (types != null && types.length >0) && keyword != null){ // 검색 조건과 키워드가 있다면
+            // Querydsl을 이용할 때 조건 처리에서 '( )'가 필요한 상황이라면 BooleanBuilder 를 이용
             BooleanBuilder booleanBuilder = new BooleanBuilder();
 
             for(String type: types){

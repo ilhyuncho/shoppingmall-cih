@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "board")
 public class BoardImage implements Comparable<BoardImage> {
 

@@ -54,8 +54,15 @@ public class BoardRepositoryTests {
         // 2 page order by bno desc
 
         Pageable pageable = PageRequest.of(1,10, Sort.by("bno").descending());
+        // 파라미터로 Pageable을 이용하면 리턴 타입은 Page<T> 타입을 이용할수 있다
+        Page<Board> result = boardRepository.search1(pageable);
+        // total pages
+        log.info(result.getTotalPages());
 
-        boardRepository.search1(pageable);
+        result.getContent().forEach(board -> log.info(board));
+        // 에러 발생
+        // imageSet 연관 관계 추가 이후 발생하는 듯
+        // test.board.Board.imageSet, could not initialize proxy - no Session
     }
 
     @Test
@@ -72,6 +79,10 @@ public class BoardRepositoryTests {
         log.info(result.getTotalPages());
 
         result.getContent().forEach(board -> log.info(board));
+
+        // 에러 발생
+        // imageSet 연관 관계 추가 이후 발생하는 듯
+        // test.board.Board.imageSet, could not initialize proxy - no Session
     }
 
     @Test

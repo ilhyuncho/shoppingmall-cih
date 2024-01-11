@@ -59,19 +59,14 @@ public class BoardServiceImpl implements BoardService{
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());
 
         Board board = result.orElseThrow();
-
         board.change(boardDTO.getTitle(), boardDTO.getContent());
 
         boardRepository.save(board);
-
     }
-
     @Override
     public void remove(Long bno) {
-
         boardRepository.deleteById(bno);
     }
-
     @Override
     public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
 
@@ -83,7 +78,6 @@ public class BoardServiceImpl implements BoardService{
 
         List<BoardDTO> dtoList = result.getContent().stream()
                 .map(board -> modelMapper.map(board,BoardDTO.class)).collect(Collectors.toList());
-
 
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
