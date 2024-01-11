@@ -3,7 +3,6 @@ package com.cih.shoppingmallcih.repository.test;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
-import com.sun.xml.bind.v2.schemagen.episode.Package;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.test.annotation.Commit;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
@@ -25,6 +25,19 @@ public class BoardRepositoryTests {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Test
+    public void testInsert(){
+        IntStream.rangeClosed(1,100).forEach(i ->{
+            Board board = Board.builder()
+                    .title("title..." + i)
+                    .content("content..." + i)
+                    .writer("user"+(i % 10))
+                    .build();
+
+            Board result = boardRepository.save(board);
+            log.info("bno:" + result.getBno());
+        });
+    }
     @Test
     public void testSelect(){
         Long bno = 100L;

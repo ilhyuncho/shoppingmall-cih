@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Board extends BaseEntity {
 
