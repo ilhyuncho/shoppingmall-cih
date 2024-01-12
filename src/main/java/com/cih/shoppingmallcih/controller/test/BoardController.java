@@ -84,7 +84,6 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
-
     @GetMapping({"/read", "/modify"})
     public String read(HttpServletRequest request, Long bno, PageRequestDTO pageRequestDTO, Model model){
 
