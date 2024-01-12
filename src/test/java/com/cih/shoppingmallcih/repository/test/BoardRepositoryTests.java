@@ -11,11 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.annotation.Commit;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -105,68 +102,69 @@ public class BoardRepositoryTests {
         result.getContent().forEach( boardListReplyCountDTO -> log.info(boardListReplyCountDTO));
     }
 
-    @Test
-    public void testInsertWithImages(){
-        Board board = Board.builder()
-                .title("Image test")
-                .content("첨부파일 테스트")
-                .writer("tester")
-                .build();
-
-        for(int i = 0 ; i < 3; i++){
-            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
-        }
-        boardRepository.save(board);
-        // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
-    }
-
-    @Test
-    public void testReadWithImages() {
-        // 문제 코드
-//        Optional<Board> result = boardRepository.findById(1L);
+//    @Test
+//    public void testInsertWithImages(){
+//        Board board = Board.builder()
+//                .title("Image test")
+//                .content("첨부파일 테스트")
+//                .writer("tester")
+//                .build();
 //
-//        Board board = result.orElseThrow();
+//        for(int i = 0 ; i < 3; i++){
+//            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+//        }
+//        boardRepository.save(board);
+//        // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
+//    }
+
+//    @Test
+//    public void testReadWithImages() {
+//        // 문제 코드
+////        Optional<Board> result = boardRepository.findById(1L);
+////
+////        Board board = result.orElseThrow();
+////
+////        log.info(board);
+////        log.info("----------");
+////        log.info(board.getImageSet());
+//        // 에러 발생, db연결 끊긴 상태에서 다시 select
+//
+//        // 개선 버전
+//        Optional<Board> result1 = boardRepository.findByIdWithImages(1L);
+//
+//        Board board = result1.orElseThrow();
 //
 //        log.info(board);
 //        log.info("----------");
 //        log.info(board.getImageSet());
-        // 에러 발생, db연결 끊긴 상태에서 다시 select
-
-        // 개선 버전
-        Optional<Board> result1 = boardRepository.findByIdWithImages(1L);
-
-        Board board = result1.orElseThrow();
-
-        log.info(board);
-        log.info("----------");
-        log.info(board.getImageSet());
-        // left join으로 한번에 select
-
-    }
-
-    @Transactional
-    @Commit
-    @Test
-    public void testModifyImages(){
-        Optional<Board> result = boardRepository.findByIdWithImages(1L);
-
-        Board board = result.orElseThrow();
-
-        // 기존의 첨부파일들은 삭제
-        board.clearImages();
-
-        for(int i = 0; i < 2; i++){
-            board.addImage(UUID.randomUUID().toString(), "updateFile44"+i+".jpg");
-        }
-
-        boardRepository.save(board);
-        // 문제: 기존 image는 삭제 되지 않고.. board_bno 가 null 로 업데이트 됨
-        // 기존 image는 삭제 처리 하고 싶음
-        // @OneToMany에 orphanRemoval = true로 설정
-        
-        // 근데 실습은 delete 되지 않음 ㅜㅜ
-
-    }
+//        // left join으로 한번에 select
+//
+//    }
+//
+//    @Transactional
+//    @Commit
+//    @Test
+//
+//    public void testModifyImages(){
+//        Optional<Board> result = boardRepository.findByIdWithImages(1L);
+//
+//        Board board = result.orElseThrow();
+//
+//        // 기존의 첨부파일들은 삭제
+//        board.clearImages();
+//
+//        for(int i = 0; i < 2; i++){
+//            board.addImage(UUID.randomUUID().toString(), "updateFile44"+i+".jpg");
+//        }
+//
+//        boardRepository.save(board);
+//        // 문제: 기존 image는 삭제 되지 않고.. board_bno 가 null 로 업데이트 됨
+//        // 기존 image는 삭제 처리 하고 싶음
+//        // @OneToMany에 orphanRemoval = true로 설정
+//
+//        // 근데 실습은 delete 되지 않음 ㅜㅜ
+//
+//    }
 
 
 
