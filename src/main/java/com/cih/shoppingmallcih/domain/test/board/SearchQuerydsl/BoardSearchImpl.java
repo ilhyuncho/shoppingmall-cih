@@ -96,10 +96,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
 
+        // leftJoin 처리
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
+        query.groupBy(board);   // 조인 처리 후에 게시물당 처리가 필요해서
 
-        query.groupBy(board);
 
         if( (types != null && types.length > 0) && keyword != null){
             BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -119,7 +120,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
             }
             query.where(booleanBuilder);
         }
-        // JPA에서는 Projection 이라고 해서 JPQL의 결과를 바로 DTO로 처리하는 기능
+        // JPA에서는 Projection(프로젝션) 이라고 해서 JPQL의 결과를 바로 DTO로 처리하는 기능
         JPQLQuery<BoardListReplyCountDTO> dtoQuery = query.select(Projections.bean(BoardListReplyCountDTO.class,
                 board.bno,
                 board.title,

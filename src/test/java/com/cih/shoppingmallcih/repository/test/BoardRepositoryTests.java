@@ -87,7 +87,7 @@ public class BoardRepositoryTests {
 
         String[] types= {"t", "c","w"};
 
-        String keyword= "99";
+        String keyword= "92";
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
 
