@@ -14,6 +14,7 @@ async function get1(bno){
 }
 // 댓글 목록 처리
 async function getList({bno, page, size, goLast}){
+    // goLast : 마지막 페이지 호출 여부
     const result = await axios.get(`/replies/list/${bno}`, {params: {page, size}})
 
     console.log(result.data)

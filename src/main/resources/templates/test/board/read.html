@@ -143,19 +143,19 @@
   <script src="/js/reply.js"></script>
 
 
-</div>
+</div> <!--<div layout:fragment="content">-->
 
 <script layout:fragment="script" th:inline="javascript">
 
     const bno = [[${dto.bno}]]
 
-    // // 비동기 처리_샘플
-    // // get1(bno) 호출시 Promise가 반환
-    // get1(bno).then(data => {
-    //     console.log(data)
-    // }).catch(e=>{
-    //     console.error(e)
-    // })
+    // 비동기 처리_샘플
+    // get1(bno) 호출시 Promise가 반환
+    get1(bno).then(data => {
+        console.log(data)
+    }).catch(e=>{
+        console.error(e)
+    })
 
     const replyList = document.querySelector('.replyList')  // 댓글 목록 DOM
     const replyPaging = document.querySelector('.replyPaging')  // 페이지 목록 DOM
@@ -227,6 +227,7 @@
 
     }
 
+    // 댓글 목록 처리
     function printReplies(page,size,goLast){
         getList({bno, page, size, goLast}).then(data=> {
 
