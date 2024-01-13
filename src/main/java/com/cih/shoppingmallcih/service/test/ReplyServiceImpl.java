@@ -1,6 +1,5 @@
 package com.cih.shoppingmallcih.service.test;
 
-import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.reply.Reply;
 import com.cih.shoppingmallcih.domain.test.reply.ReplyRepository;
 import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
@@ -32,6 +31,7 @@ public class ReplyServiceImpl implements ReplyService {
     public Long register(ReplyDTO replyDTO) {
 
         //이부분 때문에 ModelMapper설정- MatchingStrategies.LOOSE 으로 수정
+        // db에 등록된 bno 값이 null 이여서.
        Reply reply = modelMapper.map(replyDTO, Reply.class);
 
 
@@ -67,7 +67,6 @@ public class ReplyServiceImpl implements ReplyService {
         // 이 부분 필요한 부분인가??
         Optional<Reply> byId = replyRepository.findById(rno);
         if(byId.isPresent()){
-
             replyRepository.deleteById(rno);
         }
     }

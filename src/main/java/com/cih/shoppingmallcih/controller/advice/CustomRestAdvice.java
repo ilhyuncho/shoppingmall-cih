@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.controller.advice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -41,18 +42,20 @@ public class CustomRestAdvice {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleFKException(Exception e){
-
+        // 댓글 등록시 잘못된 게시물 번호가 전달 될떄 실행 ( 워크북p559 )
         log.error(e);
 
         Map<String, String> errorMap = new HashMap<>();
 
-        errorMap.put("time", "" + System.currentTimeMillis());  // long 으로 String으로 변경 ㅋㅋ
+        errorMap.put("time", "" + System.currentTimeMillis());  // long 을 String으로 변경 ㅋㅋ
         errorMap.put("msg", "constraint fails");
 
         return ResponseEntity.badRequest().body(errorMap);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler(
+                    { NoSuchElementException.class,
+                     EmptyResultDataAccessException.class})      // 다른 예외 추가 가능
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e){
 
