@@ -1,9 +1,6 @@
 package com.cih.shoppingmallcih.service.test;
 
-import com.cih.shoppingmallcih.dto.test.BoardDTO;
-import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
-import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
-import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
+import com.cih.shoppingmallcih.dto.test.*;
 
 public interface BoardService {
     Long register(BoardDTO boardDTO);
@@ -18,4 +15,7 @@ public interface BoardService {
     
     // 댓글의 숫자까지 처리
     PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO);
+
+    // 게시글의 이미지와 댓글의 숫자까지 처리
+    PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
 }

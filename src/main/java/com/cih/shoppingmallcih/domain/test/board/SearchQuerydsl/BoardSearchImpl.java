@@ -3,8 +3,10 @@ package com.cih.shoppingmallcih.domain.test.board.SearchQuerydsl;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.QBoard;
 import com.cih.shoppingmallcih.domain.test.reply.QReply;
+import com.cih.shoppingmallcih.dto.test.BoardListAllDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 //Querydsl
 //Querydsl(2) - 반드시 '인터페이스 이름 + impl'로
@@ -139,25 +142,63 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         return new PageImpl<>(dtoList, pageable, count);
     }
 
+//    @Override
+//    public Page<BoardListReplyCountDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable) {
+//        // Querydsl을 이용
+//        QBoard board = QBoard.board;
+//        QReply reply = QReply.reply;
+//
+//        JPQLQuery<Board> boardJPQLQuery = from(board);
+//        boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
+//
+//        getQuerydsl().applyPagination(pageable, boardJPQLQuery);    // paging
+//
+//        List<Board> boardList = boardJPQLQuery.fetch();
+//
+//        boardList.forEach(board1 -> {
+//            System.out.println(board1.getBno());
+//            System.out.println(board1.getImageSet());
+//            System.out.println("---------------");
+//        });
+//
+//        return null;
+//    }
+
     @Override
-    public Page<BoardListReplyCountDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable) {
-        // Querydsl을 이용
+    public Page<BoardListAllDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
 
         JPQLQuery<Board> boardJPQLQuery = from(board);
         boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
 
-        getQuerydsl().applyPagination(pageable, boardJPQLQuery);    // paging
+        boardJPQLQuery.groupBy(board);
 
-        List<Board> boardList = boardJPQLQuery.fetch();
+        getQuerydsl().applyPagination(pageable, boardJPQLQuery); // paging
 
-        boardList.forEach(board1 -> {
-            System.out.println(board1.getBno());
-            System.out.println(board1.getImageSet());
-            System.out.println("---------------");
-        });
+        // 임시로 데이터를 튜플 타입으로 추출해서 처리
+        JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(board, reply.countDistinct());
 
-        return null;
+        List<Tuple> tupleList = tupleJPQLQuery.fetch();
+        // List<Tuple> 이용하는 방식은 Projections를 이용하는 방식보다 번거롭기는 하지만,
+        // 코드를 통해서 마음대로 커스터마이징 할수 있다는 장점이 있다.
+
+        List<BoardListAllDTO> dtoList = tupleList.stream().map(tuple -> {
+            Board board1 = (Board) tuple.get(board);
+            Long replyCount = tuple.get(1, Long.class);
+
+            BoardListAllDTO dto = BoardListAllDTO.builder()
+                    .bno(board1.getBno())
+                    .title(board1.getTitle())
+                    .writer(board1.getWriter())
+                    .regDate(board1.getRegDate())
+                    .replyCount(replyCount)
+                    .build();
+            return dto;
+        }).collect(Collectors.toList());
+
+        Long totalCount = boardJPQLQuery.fetchCount();
+
+        return new PageImpl<>(dtoList, pageable, totalCount);
     }
 }

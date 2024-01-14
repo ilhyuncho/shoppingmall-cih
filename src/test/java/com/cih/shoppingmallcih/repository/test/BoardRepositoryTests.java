@@ -3,6 +3,7 @@ package com.cih.shoppingmallcih.repository.test;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
 import com.cih.shoppingmallcih.domain.test.reply.ReplyRepository;
+import com.cih.shoppingmallcih.dto.test.BoardListAllDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -203,9 +204,16 @@ public class BoardRepositoryTests {
     @Test
     public void testSearchImageReplyCount(){
         Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
-        boardRepository.searchWithAll(null, null, pageable);
+        //boardRepository.searchWithAll(null, null, pageable);
         // N+1 문제 발생
         // 해결책 : Board 엔티티에 @BatchSize 지정 : 'n'번에 해당하는 쿼리를 모아서 한번에 실행
+
+
+        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+        log.info("--------------------------------");
+        log.info(result.getTotalElements());
+
+        result.getContent().forEach(boardListAllDTO -> log.info(boardListAllDTO));
 
     }
 

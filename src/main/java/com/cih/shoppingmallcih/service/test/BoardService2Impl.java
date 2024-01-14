@@ -2,10 +2,7 @@ package com.cih.shoppingmallcih.service.test;
 
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
-import com.cih.shoppingmallcih.dto.test.BoardDTO;
-import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
-import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
-import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
+import com.cih.shoppingmallcih.dto.test.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -107,6 +104,11 @@ public class BoardService2Impl implements BoardService{
                 .dtoList(result.getContent())
                 .total((int)result.getTotalElements())
                 .build();
+    }
+
+    @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+        return null;
     }
 
 }

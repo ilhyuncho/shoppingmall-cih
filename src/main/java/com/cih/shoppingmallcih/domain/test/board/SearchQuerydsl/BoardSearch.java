@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.domain.test.board.SearchQuerydsl;
 
 
 import com.cih.shoppingmallcih.domain.test.board.Board;
+import com.cih.shoppingmallcih.dto.test.BoardListAllDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,5 +15,6 @@ public interface BoardSearch {
 
    Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
-   Page<BoardListReplyCountDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable);
+   //Page<BoardListReplyCountDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable);
+    Page<BoardListAllDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable);
 }
