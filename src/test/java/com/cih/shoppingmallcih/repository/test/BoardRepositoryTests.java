@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.repository.test;
 
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
+import com.cih.shoppingmallcih.domain.test.reply.ReplyRepository;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,9 @@ public class BoardRepositoryTests {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Test
     public void testInsert(){
@@ -166,6 +170,15 @@ public class BoardRepositoryTests {
         // @OneToMany에 orphanRemoval = true로 설정
     }
 
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+        Long bno = 416L;
+
+        replyRepository.deleteByBoard_Bno(bno);
+        boardRepository.deleteById(bno);
+    }
 
 
 
