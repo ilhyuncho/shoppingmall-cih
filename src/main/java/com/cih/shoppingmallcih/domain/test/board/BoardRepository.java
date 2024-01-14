@@ -24,7 +24,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>,
     @Query("select b from Board b where b.title like concat('%', :keyword, '%')")
     Page<Board> findKeyword(String keyword, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"imageSet"})
+    // 지연(lazy)로딩이라고 해도 한 번에 조인 처리해서 select가 이루어지도록 하는 방법
+    @EntityGraph(attributePaths = {"imageSet"}) // attributePaths : 같이 로딩해야 하는 속성을 명시
     @Query("select b from Board b where b.bno=:bno")
     Optional<Board> findByIdWithImages(@Param(value="bno") Long bno);
 

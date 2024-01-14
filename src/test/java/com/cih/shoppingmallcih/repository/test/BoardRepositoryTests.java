@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -102,44 +103,44 @@ public class BoardRepositoryTests {
         result.getContent().forEach( boardListReplyCountDTO -> log.info(boardListReplyCountDTO));
     }
 
-//    @Test
-//    public void testInsertWithImages(){
-//        Board board = Board.builder()
-//                .title("Image test")
-//                .content("첨부파일 테스트")
-//                .writer("tester")
-//                .build();
-//
-//        for(int i = 0 ; i < 3; i++){
-//            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
-//        }
-//        boardRepository.save(board);
-//        // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
-//    }
+    @Test
+    public void testInsertWithImages(){
+        Board board = Board.builder()
+                .title("Image test")
+                .content("첨부파일 테스트")
+                .writer("tester")
+                .build();
 
-//    @Test
-//    public void testReadWithImages() {
-//        // 문제 코드
-////        Optional<Board> result = boardRepository.findById(1L);
-////
-////        Board board = result.orElseThrow();
-////
-////        log.info(board);
-////        log.info("----------");
-////        log.info(board.getImageSet());
-//        // 에러 발생, db연결 끊긴 상태에서 다시 select
+        for(int i = 0 ; i < 3; i++){
+            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+        }
+        boardRepository.save(board);
+        // board 테이블에 1번, board_image 테이ㅡㅂ에 3번 insert가 일어남
+    }
+
+    @Test
+    public void testReadWithImages() {
+        // 문제 코드
+//        Optional<Board> result = boardRepository.findById(413L);
 //
-//        // 개선 버전
-//        Optional<Board> result1 = boardRepository.findByIdWithImages(1L);
-//
-//        Board board = result1.orElseThrow();
+//        Board board = result.orElseThrow();
 //
 //        log.info(board);
 //        log.info("----------");
 //        log.info(board.getImageSet());
-//        // left join으로 한번에 select
-//
-//    }
+        // 에러 발생, db연결 끊긴 상태에서 다시 select
+
+        // 개선 버전 ( board, board_image 테이블의 조인 처리 가 된 상태로 select가 실행
+        Optional<Board> result1 = boardRepository.findByIdWithImages(1L);
+
+        Board board = result1.orElseThrow();
+
+        log.info(board);
+        log.info("----------");
+        log.info(board.getImageSet());
+        // left join으로 한번에 select
+
+    }
 //
 //    @Transactional
 //    @Commit
