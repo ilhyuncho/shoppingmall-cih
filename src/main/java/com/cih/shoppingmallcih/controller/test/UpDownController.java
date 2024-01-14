@@ -45,6 +45,7 @@ public class UpDownController {
 
                 boolean image = false;
 
+                // 겹치지 않는 이름 생성
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(uploadPath, uuid+"_" + originalName);
 

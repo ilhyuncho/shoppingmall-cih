@@ -21,7 +21,7 @@ public class BoardImage implements Comparable<BoardImage> {
 
     private String fileName;
 
-    private int ord;
+    private int ord;    // 순번
 
     @ManyToOne
     private Board board;
@@ -31,6 +31,7 @@ public class BoardImage implements Comparable<BoardImage> {
         return this.ord - other.ord;
     }
     public void changeBoard(Board board){
+        // 나중에 Board 엔티티 삭제 시에 BoardImage 객체의 참조도 변경하기 위해서 사용
         this.board = board;
     }
 }
