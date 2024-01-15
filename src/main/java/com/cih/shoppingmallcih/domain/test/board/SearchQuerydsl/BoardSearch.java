@@ -16,5 +16,5 @@ public interface BoardSearch {
    Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
    //Page<BoardListReplyCountDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable);
-    Page<BoardListAllDTO> searchWithAll(String[] tyeps, String keyword, Pageable pageable);
+    Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable);
 }
