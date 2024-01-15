@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.service.test;
 
+import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.dto.test.*;
 
 public interface BoardService {
@@ -18,4 +19,22 @@ public interface BoardService {
 
     // 게시글의 이미지와 댓글의 숫자까지 처리
     PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
+
+    // DTO를 엔티티로 변환하기
+    default Board dtoToEntity(BoardDTO boardDTO) {
+        Board board = Board.builder()
+                .bno(boardDTO.getBno())
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .writer(boardDTO.getWriter())
+                .build();
+
+        if(boardDTO.getFileNames() != null){
+            boardDTO.getFileNames().forEach(fileName ->{
+                String[] arr = fileName.split("_");
+                board.addImage(arr[0], arr[1]);
+            });
+        }
+        return board;
+    }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
@@ -31,4 +32,7 @@ public class BoardDTO {
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+
+    // 첨부파일의 이름들 ( Board에서 Set<BoardImage> 타입으로 변환되어야만 함 )
+    private List<String> fileNames;
 }
