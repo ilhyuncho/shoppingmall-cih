@@ -50,7 +50,17 @@ public class BoardServiceTests {
 
         Long register = boardService.register(boardDTO);
         log.info(register);
+    }
 
+    @Test
+    public void testReadAll(){
+
+        Long bno = 518L;
+
+        BoardDTO boardDTO = boardService.readOne(bno);
+        log.info(boardDTO.toString());
+
+        boardDTO.getFileNames().forEach(filename -> log.info(filename.toString()));
     }
 
 }

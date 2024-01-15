@@ -3,6 +3,9 @@ package com.cih.shoppingmallcih.service.test;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.dto.test.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface BoardService {
     Long register(BoardDTO boardDTO);
 
@@ -36,5 +39,23 @@ public interface BoardService {
             });
         }
         return board;
+    }
+
+    default BoardDTO entityToDTO(Board board) {
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(board.getBno())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .regDate(board.getRegDate())
+                .modDate(board.getModDate())
+                .build();
+
+        List<String> collect = board.getImageSet().stream().sorted().
+                map(image -> image.getUuid() + "_" + image.getFileName()).collect(Collectors.toList());
+
+        boardDTO.setFileNames(collect);
+
+        return boardDTO;
     }
 }
