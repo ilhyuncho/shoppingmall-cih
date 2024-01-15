@@ -117,7 +117,21 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
-        return null;
+
+        String[] types  = pageRequestDTO.getTypes();
+        Pageable page = pageRequestDTO.getPageable("bno");  // bno 는 정렬 조건
+
+        Page<BoardListAllDTO> boardListAllDTOS =
+                boardRepository.searchWithAll(types, pageRequestDTO.getKeyword(), page);
+
+        List<BoardListAllDTO> content = boardListAllDTOS.getContent();
+
+
+        return PageResponseDTO.<BoardListAllDTO>withAll()
+                        .pageRequestDTO(pageRequestDTO)
+                        .dtoList(content)
+                        .total((int)boardListAllDTOS.getTotalElements())
+                .build();
     }
 
 }

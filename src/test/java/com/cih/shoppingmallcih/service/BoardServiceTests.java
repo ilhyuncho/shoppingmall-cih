@@ -1,9 +1,7 @@
 package com.cih.shoppingmallcih.service;
 
 
-import com.cih.shoppingmallcih.dto.test.BoardDTO;
-import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
-import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
+import com.cih.shoppingmallcih.dto.test.*;
 import com.cih.shoppingmallcih.service.test.BoardService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -79,5 +78,27 @@ public class BoardServiceTests {
     public void testRemoveAll(){
         Long bno = 518L;
         boardService.remove(bno);
+    }
+
+    @Test
+    public void testListWithAll(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                        .page(1)
+                        .size(10)
+                        .build();
+
+        PageResponseDTO<BoardListAllDTO> responseDTO
+                = boardService.listWithAll(pageRequestDTO);
+
+        List<BoardListAllDTO> dtoList = responseDTO.getDtoList();
+
+        dtoList.forEach(dto -> {
+            log.info(dto.getBno()+":"+dto.getTitle());
+
+            if(dto.getBoardImages() != null){
+                dto.getBoardImages().forEach(log::info);
+            }
+        });
+
     }
 }
