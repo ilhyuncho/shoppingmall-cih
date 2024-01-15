@@ -3,6 +3,7 @@ package com.cih.shoppingmallcih.domain.test.board.SearchQuerydsl;
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.QBoard;
 import com.cih.shoppingmallcih.domain.test.reply.QReply;
+import com.cih.shoppingmallcih.dto.test.BoardImageDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListAllDTO;
 import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -194,6 +195,17 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                     .regDate(board1.getRegDate())
                     .replyCount(replyCount)
                     .build();
+
+            // BoardImage를 BoardImageDTO 처리할 부분
+            List<BoardImageDTO> imageDTOS = board1.getImageSet().stream().sorted()
+                    .map(boardImage -> BoardImageDTO.builder()
+                            .uuid(boardImage.getUuid())
+                            .filename(boardImage.getFileName())
+                            .ord(boardImage.getOrd())
+                            .build()
+                    ).collect(Collectors.toList());
+            dto.setBoardImages(imageDTOS);
+
             return dto;
         }).collect(Collectors.toList());
 
