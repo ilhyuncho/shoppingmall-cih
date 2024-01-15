@@ -2,10 +2,7 @@ package com.cih.shoppingmallcih.controller.test;
 
 
 import com.cih.shoppingmallcih.config.test.DbConfig;
-import com.cih.shoppingmallcih.dto.test.BoardDTO;
-import com.cih.shoppingmallcih.dto.test.BoardListReplyCountDTO;
-import com.cih.shoppingmallcih.dto.test.PageRequestDTO;
-import com.cih.shoppingmallcih.dto.test.PageResponseDTO;
+import com.cih.shoppingmallcih.dto.test.*;
 import com.cih.shoppingmallcih.service.test.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -41,7 +38,9 @@ public class BoardController {
         log.info(pageRequestDTO);
 
         //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
-        PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
+        //PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
+        PageResponseDTO<BoardListAllDTO> responseDTO
+                = boardService.listWithAll(pageRequestDTO);
 
         log.info(responseDTO);
 
