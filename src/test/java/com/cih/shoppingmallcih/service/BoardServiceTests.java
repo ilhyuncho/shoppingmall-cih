@@ -63,4 +63,21 @@ public class BoardServiceTests {
         boardDTO.getFileNames().forEach(filename -> log.info(filename.toString()));
     }
 
+    @Test
+    public void testModify(){
+        BoardDTO boardDTO = BoardDTO.builder()
+                        .bno(518L)
+                        .title("UPdate........")
+                        .content("updatdfsdf")
+                        .build();
+        // 첨부파일을 하나 추가
+        boardDTO.setFileNames(Arrays.asList(UUID.randomUUID()+"_zzz.jpg"));
+
+        boardService.modify(boardDTO);
+    }
+    @Test
+    public void testRemoveAll(){
+        Long bno = 518L;
+        boardService.remove(bno);
+    }
 }
