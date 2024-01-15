@@ -71,7 +71,7 @@ public class BoardController {
             return "redirect:/board/register";
         }
 
-        log.info("boardDTO");
+        log.info("boardDTO: " + boardDTO);
 
         Long bno = boardService.register(boardDTO);
 

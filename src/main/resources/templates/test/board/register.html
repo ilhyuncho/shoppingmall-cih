@@ -164,6 +164,31 @@
     })
   },false)
 
+  document.querySelector(".submitBtn").addEventListener("click", function(e){
+    e.preventDefault()
+    e.stopPropagation()
+
+    const target = document.querySelector(".uploadHidden")
+    const uploadFiles = uploadResult.querySelectorAll("img") // uploadResult : 업로드 미리 보기
+
+    console.log("uploadFiles.length" + uploadFiles.length)
+    let str= ''
+
+    for(let i = 0 ; i < uploadFiles.length;i++){
+      const uploadFile = uploadFiles[i]
+      const imgLink = uploadFile.getAttribute("data-src")
+
+      console.log("imgLink:" + imgLink)
+
+      str += `<input type='hidden' name='fileNames' value="${imgLink}">`
+    }
+    console.log("str" + str)
+    target.innerHTML = str;
+
+    // 실제 등록 처리
+    document.querySelector("form").submit();
+
+  }, false)
 
 
 </script>
