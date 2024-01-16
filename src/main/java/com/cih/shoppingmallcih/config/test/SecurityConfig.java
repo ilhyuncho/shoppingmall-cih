@@ -48,6 +48,7 @@ public class SecurityConfig {
 //
 //        http.csrf().disable();                  // post요청에서 403 forbidden 에러 발생 때문에
 
+        http.formLogin(); // 로그인 화면에서 로그인을 진행한다는 설정
 
 
         return http.build();
