@@ -6,7 +6,7 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.16'
+    id 'org.springframework.boot' version '2.6.8'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -65,9 +65,9 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
     // spring security (23.10.11 )
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     // for @WithMockUser
-    testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+   // testImplementation group: 'org.springframework.security', name: 'spring-security-test'
 
     // JPA-querydql start
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
