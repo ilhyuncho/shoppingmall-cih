@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
@@ -20,20 +22,33 @@ import org.springframework.security.web.SecurityFilterChain;
 // securedEnabled => Secured 애노테이션 사용 여부, prePostEnabled => PreAuthorize 어노테이션 사용 여부.
 public class CustomSecurityConfig {
 
+    // 쿠키와 관련된 정보를 테이블로 보관하도록 지정할때 두 객체가 필요
+    private final DataSource dataSource;
+    private final CustomUserDetailService userDetailService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.error("=================configue");
 
         http.formLogin().loginPage("/member/login");
-
+        // csrf 토큰 비활성화
         http.csrf().disable();
+
+        http.rememberMe().key("12345678")       // 쿠키의 값을 인코딩하기 위한 키값
+                .tokenRepository(persistentTokenRepository())
+                .userDetailsService(userDetailService)
+                .tokenValiditySeconds(60*60);       // 1시간
 
         return http.build();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         log.info("-------------web configure-----------------");
