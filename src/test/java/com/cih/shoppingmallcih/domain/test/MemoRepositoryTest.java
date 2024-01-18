@@ -1,6 +1,5 @@
 package com.cih.shoppingmallcih.domain.test;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,8 +8,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
@@ -36,7 +34,7 @@ class MemoRepositoryTest {
     @Transactional
     public void testGetOne(){
 
-        Memo result = memoRepository.getReferenceById(2L);
+        Memo result = memoRepository.findById(2L).orElseThrow();
 
         System.out.println("=================");
         System.out.println(result);                     // 2.실제 값이 필요할때 쿼리 실행 (  @Transactional 이 필요 )
