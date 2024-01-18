@@ -33,7 +33,7 @@ public class CustomUserDetailService implements UserDetailsService {
 //
 //        return userDetails;
 
-        log.info("loadUserByUsername: " + username);
+        log.error("loadUserByUsername: " + username);
 
         Optional<Member> result = memberRepository.getWithRoles(username);
         if(result.isEmpty()){
@@ -49,7 +49,7 @@ public class CustomUserDetailService implements UserDetailsService {
             false,
             member.getRoleSet().stream().map(memberRole -> new SimpleGrantedAuthority("ROLE_"+memberRole.name()))
                     .collect(Collectors.toList()));
-            log.info("memberSecurityDTO: " + memberSecurityDTO );
+            log.error("memberSecurityDTO: " + memberSecurityDTO );
             return memberSecurityDTO;
     }
 }
