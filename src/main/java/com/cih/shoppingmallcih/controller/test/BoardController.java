@@ -97,6 +97,7 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+    @PreAuthorize("isAuthenticated()")      // 로그인한 사용자만 제한
     @GetMapping({"/read", "/modify"})
     public String read(HttpServletRequest request, Long bno, PageRequestDTO pageRequestDTO, Model model){
 
