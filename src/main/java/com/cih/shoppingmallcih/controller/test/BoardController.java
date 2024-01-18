@@ -112,6 +112,7 @@ public class BoardController {
         log.info("/test" + requestURI);
         return "/test" + requestURI;
     }
+    @PreAuthorize("principal.username == #boardDTO.writer")
     @PostMapping("/modify")
     public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes){
@@ -135,6 +136,8 @@ public class BoardController {
         return "redirect:/board/read";
     }
 
+    @PreAuthorize("principal.username == #boardDTO.writer") // 만일 다른 사용자면 AccessDeniedHandler
+        // 가 작성되어 로그인 페이지로 리다이렉트
     @PostMapping("/remove")
     public String remove( BoardDTO boardDTO, RedirectAttributes redirectAttributes){
         log.info("remove......post: " + boardDTO);
