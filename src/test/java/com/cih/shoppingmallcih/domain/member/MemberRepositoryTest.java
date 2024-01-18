@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Log4j2
@@ -36,4 +35,17 @@ class MemberRepositoryTest {
             memberRepository.save(member);
         });
     }
+
+    @Test
+    public void testRead(){
+        Optional<Member> result = memberRepository.getWithRoles("member100");
+
+        Member member = result.orElseThrow();
+
+        log.error(member);
+        log.info(member.getRoleSet());
+
+        member.getRoleSet().forEach(memberRole -> log.error(memberRole.name()));
+    }
+
 }
