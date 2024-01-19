@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.config.test.security;
 
+import com.cih.shoppingmallcih.config.test.security.handler.CustomSocialLoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -8,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -27,6 +30,13 @@ public class CustomSecurityConfig {
     private final DataSource dataSource;
     private final CustomUserDetailService userDetailService;
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new CustomSocialLoginSuccessHandler(passwordEncoder);
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.error("=================configue");
@@ -42,7 +52,8 @@ public class CustomSecurityConfig {
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());    //403
 
         // 스프링부트의 OAUth2 Client를 이용할떄는 설정관련 코드에 OAUth2로그인을 사용한다는 설정 추가
-        http.oauth2Login().loginPage("/member/login");
+        http.oauth2Login().loginPage("/member/login")
+                .successHandler(authenticationSuccessHandler());
         
         return http.build();
     }
