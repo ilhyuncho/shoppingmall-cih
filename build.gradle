@@ -99,6 +99,9 @@ dependencies {
     // thymeleaf Extras Springsecurity5 (24.01.18)
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
+    // social login-kakao (24.01.19)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 }
 
 tasks.named('test') {

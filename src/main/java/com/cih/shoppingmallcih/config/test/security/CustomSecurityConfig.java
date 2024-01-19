@@ -41,6 +41,9 @@ public class CustomSecurityConfig {
                 .tokenValiditySeconds(60*60);       // 1시간
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());    //403
 
+        // 스프링부트의 OAUth2 Client를 이용할떄는 설정관련 코드에 OAUth2로그인을 사용한다는 설정 추가
+        http.oauth2Login().loginPage("/member/login");
+        
         return http.build();
     }
 
