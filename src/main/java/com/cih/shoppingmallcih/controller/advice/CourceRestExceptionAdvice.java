@@ -1,6 +1,6 @@
 package com.cih.shoppingmallcih.controller.advice;
 
-import com.cih.shoppingmallcih.controller.CustomException.CourceNotFoundException;
+import com.cih.shoppingmallcih.controller.customException.CourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 public class CourceRestExceptionAdvice extends ResponseEntityExceptionHandler {
     // ResponseEntityExceptionHandler : @RequestMapping이 붙어 있는 모든 메서드에서 발생한 예외를 
-    // @ExceptionHandler가 붙어 있는 메서드에서 처리할 수 있도록 중앙호된 예외 처리 기능을 제공
+    // @ExceptionHandler가 붙어 있는 메서드에서 처리할 수 있도록 중앙화된 예외 처리 기능을 제공
     
     
     // 실전 스프링 부트 책 version

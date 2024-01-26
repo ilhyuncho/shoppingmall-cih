@@ -1,6 +1,8 @@
 package com.cih.shoppingmallcih.controller.test.exception;
 
 
+import com.cih.shoppingmallcih.common.Constants;
+import com.cih.shoppingmallcih.controller.customException.CustomException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,11 @@ public class ExceptionController {
     @GetMapping
     public void getRuntimeException() {
         throw new RuntimeException("getRunTimeException 호출");
+    }
+
+    @GetMapping("/custom")
+    public void getCustomException() throws CustomException{
+        throw new CustomException(Constants.ExceptionClass.PRODUCT, HttpStatus.BAD_REQUEST, "getCusom 호출");
     }
 
     @ExceptionHandler(value = RuntimeException.class)

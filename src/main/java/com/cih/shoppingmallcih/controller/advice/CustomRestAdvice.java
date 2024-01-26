@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.controller.advice;
 
+import com.cih.shoppingmallcih.controller.customException.CustomException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -80,7 +81,7 @@ public class CustomRestAdvice {
 
         log.error("handleRuntimeException: request:" + request.getRequestURI());
 
-        HashMap<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         map.put("error type", httpStatus.getReasonPhrase());
         map.put("code", "400");
@@ -88,5 +89,20 @@ public class CustomRestAdvice {
 
         // ResponseEntity 를 리턴하는 다른 형태
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
+    }
+
+    @ExceptionHandler(value = CustomException.class)
+    public ResponseEntity<Map<String, String>> handleCustomException(CustomException e, HttpServletRequest request) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+
+        log.error("handleCustomException: request:" + request.getRequestURI());
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("error type", e.getHttpStatusType());
+        map.put("code",Integer.toString(e.getHttpStatusCode()));
+        map.put("message", e.getMessage());
+
+        return new ResponseEntity<>(map, responseHeaders, e.getHttpStatus());
     }
 }

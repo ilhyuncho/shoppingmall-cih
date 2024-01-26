@@ -1,4 +1,4 @@
-package com.cih.shoppingmallcih.controller.CustomException;
+package com.cih.shoppingmallcih.controller.customException;
 
 public class CourceNotFoundException extends RuntimeException{
 
