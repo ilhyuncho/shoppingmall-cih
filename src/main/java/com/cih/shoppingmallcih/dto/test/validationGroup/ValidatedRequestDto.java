@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih.dto.test.validationGroup;
 
 
+import com.cih.shoppingmallcih.common.test.validator.Telephone;
 import com.cih.shoppingmallcih.dto.test.validationGroup.group.ValidationGroup1;
 import com.cih.shoppingmallcih.dto.test.validationGroup.group.ValidationGroup2;
 import lombok.*;
@@ -20,7 +21,8 @@ public class ValidatedRequestDto {
     @Email
     private String email;
 
-    @Pattern(regexp = "01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$")
+    //@Pattern(regexp = "01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$")
+    @Telephone
     private String phoneNumber;
 
     @Min(value = 20, groups= ValidationGroup1.class)
