@@ -2,6 +2,7 @@ package com.cih.shoppingmallcih.restTemplateSample.roleClient.controller;
 
 import com.cih.shoppingmallcih.controller.restTemplateForServer.MemberDTO;
 import com.cih.shoppingmallcih.restTemplateSample.roleClient.service.RestTemplateService;
+import com.cih.shoppingmallcih.restTemplateSample.roleClient.service.WebClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,12 @@ public class RestTemplateController {
 
     private final RestTemplateService restTemplateService;
 
+    private final WebClientService webClientService;
+
     @GetMapping
     public String getName(){
-        return restTemplateService.getName();
+        //return restTemplateService.getName();
+        return webClientService.getName();
     }
 
     @GetMapping("/path-variable")
@@ -32,7 +36,8 @@ public class RestTemplateController {
     }
     @PostMapping
     public ResponseEntity<MemberDTO> postDto(){
-        return restTemplateService.postWithParamAndBody();
+        //return restTemplateService.postWithParamAndBody();
+        return webClientService.postWithParamAndBody();
     }
 
     @PostMapping("/header")
