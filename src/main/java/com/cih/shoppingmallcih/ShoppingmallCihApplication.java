@@ -13,12 +13,10 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -34,14 +32,15 @@ import java.util.Set;
 @EnableConfigurationProperties(AppProperties.class) // @ConfigurtationProperties 애너테이션이 붙어 있는 클래스를 스프링 컨테이너에 등록
                                                     // AppProperties.class 를 직접 명시 해야 함
                                                     // @ConfigurationPropertiesScan 을 지정해서 지정된 패키지 하위 클래스를 탐색 할수도 있음
-public class ShoppingmallCihApplication implements CommandLineRunner {
+
+public class ShoppingmallCihApplication implements CommandLineRunner {  // 부트 메인 클래스가
+                                                                // CommandLineRunner 인터페이스를 구현
 
     public static void main(String[] args) {
 
         //SpringApplication.run(ShoppingmallCihApplication.class, args);
 
-        Properties properties = new Properties();
-        properties.setProperty("spring.config.on-not-found", "ignore"); // 명시한 파일이 존재하지 않더라도 무시하고 기동 작업 계속 진행
+
 
         SpringApplication app = new SpringApplication(ShoppingmallCihApplication.class);
 
@@ -52,14 +51,24 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
 
         // 어플리케이션 컨텍스트가 만들어진 후에 발생하는 이벤트들은 빈으로 등록되어진 리스너를 실행 함
         app.addListeners(new SampleListener()); // 커스텀 이벤트 리스너 추가, 가변인자를 받으므로 여러개의 리스너를 한번에 등록 가능
-        app.setDefaultProperties(properties);   // 설정 정보 지정
 
+        // 설정 정보 지정 ( java.util.Properties 또는 Map<String, Object>를 인수로 받음 )
+        // application.properties 대용으로 ( 나중에 바뀌지 않는 경우에 적합 )
+        Properties properties = new Properties();
+        properties.setProperty("spring.config.on-not-found", "ignore"); // 명시한 파일이 존재하지 않더라도 무시하고 기동 작업 계속 진행
+
+        app.setDefaultProperties(properties);
+
+        // run()~~~~~~~~
         ConfigurableApplicationContext applicationContext = app.run(args);
 
+        // @PropertySource("classpath:dbConfig.properties") 사용 예제
+        // 설정 파일 위치를 임의로 지정할 수 있다.
         DbConfig dbConfig = applicationContext.getBean(DbConfig.class); // 설정 정보 빈을 가져옴
         log.warn("dbConfig.toString() : " + dbConfig.toString());  // UserName: sa, password: password!
 
-        // 커스텀 프로퍼티 예제
+        // 커스텀 프로퍼티 예제 ( @ConfigurationProperties("app.sbip.ct") 활용
+        // 타입 안정성을 보장
         AppService appService = applicationContext.getBean(AppService.class);
         log.warn("appService.getAppProperties() : " + appService.getAppProperties().toString());
 
@@ -77,14 +86,20 @@ public class ShoppingmallCihApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // MyCommandLineRunner, OtherCommandLineRunner 보다 우선순위 가 낮은듯.. ( 실행 순서 지정 불가 )
+        log.error("메인 클래스의 CommandLineRunner run()~~~");
+
+
         Course course = new Course();
         course.setId(1);
-        course.setRating(3);
+        course.setRating(0);
 
-        log.info("validation start------------------------");
+        log.error("-------------validation start------------------------");
 
+        // 유효성을 검증하는 Validator 인스턴스를 획득한다.
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+        // cource 객체에 정의된 모든 제약 사항 준수 여부를 검증하고 위반 사항을 모아서 반환한다.
         Set<ConstraintViolation<Course>> violation = validator.validate(course);
 
         violation.forEach( a -> log.error("Violation details: [{}],", a.getMessage()));

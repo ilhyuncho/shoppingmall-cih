@@ -14,7 +14,7 @@ public class OtherCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("OtherCommandLineRunner : run~~ ");
+        log.error("OtherCommandLineRunner(order=1) : run~~ ");
         Arrays.stream(args).forEach(String -> System.out.println());
     }
 }

@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import java.util.List;
 
 
-@ConstructorBinding     // 생성자를 통해 프로퍼티 정보값이 설정 됨
-@ConfigurationProperties("app.sbip.ct")
+@ConstructorBinding     // 생성자를 통해 프로퍼티 정보값이 설정 됨, 설정 정보를 외부화하고 타입 안정성을 확보할 수 있다.
+@ConfigurationProperties("app.sbip.ct") // 커스텀 프로퍼티 정의를 위한 어노테이션
 public class AppProperties {
 
     // 프로퍼티를 정의하고 이를 담는 클래스

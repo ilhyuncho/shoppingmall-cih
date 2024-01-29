@@ -90,7 +90,7 @@ dependencies {
     // Thumbnailator (23.10.26)
     implementation 'net.coobird:thumbnailator:0.4.16'
 
-    // configuration-processor (23.10.27)
+    // configuration-processor (23.10.27) - 커스텀 프로퍼티정의를 위한 스프링 부트 설정 처리기
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // password (23.10.29)

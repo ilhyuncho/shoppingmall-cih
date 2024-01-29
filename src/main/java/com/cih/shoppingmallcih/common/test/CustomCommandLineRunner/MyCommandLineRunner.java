@@ -2,7 +2,6 @@ package com.cih.shoppingmallcih.common.test.CustomCommandLineRunner;
 
 import com.cih.shoppingmallcih.domain.test.board.Board;
 import com.cih.shoppingmallcih.domain.test.board.BoardRepository;
-import com.cih.shoppingmallcih.dto.test.BoardDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +16,7 @@ import java.util.Optional;
 @Log4j2
 @RequiredArgsConstructor
 public class MyCommandLineRunner implements CommandLineRunner {
+    // CommandLineRunner -> 애플리케이션을 시작할때 특정 코드를 실행해야 할때
 
     // 스프링 부트 애플리케이션이 빈 등록을 포함한 초기화 과정 수행을 거의 다 마친 뒤에 실행되므로
     // 어떤 빈이든 주입받아 사용할수 있다
@@ -24,7 +24,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("MyCommandLineRunner : run~~ ");
+        log.error("MyCommandLineRunner(Order=2) : run~~ ");
         Arrays.stream(args).forEach(String -> System.out.println());
 
         // 테스트
