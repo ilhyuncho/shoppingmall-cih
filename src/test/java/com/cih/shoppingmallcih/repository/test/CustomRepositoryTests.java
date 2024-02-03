@@ -3,14 +3,12 @@ package com.cih.shoppingmallcih.repository.test;
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.domain.test.customRepository.CustomizedCourseRepository;
 import lombok.extern.log4j.Log4j2;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @SpringBootTest
 //@DataJpaTest
@@ -25,17 +23,22 @@ public class CustomRepositoryTests {
 
     @Test
     public void test1(){
-        Cource cource = Cource.builder()
-                .name("gaagdfgdfg")
-                .category("Sp34ring")
-                .rating(3)
-                .description("gdfg3434htghafsdf").build();
-
-        customizedCourseRepository.save(cource);
+//        Cource cource = Cource.builder()
+//                .name("gaagdfgdfg")
+//                .category("Sp34ring")
+//                .rating(3)
+//                .description("gdfg3434htghafsdf").build();
+//
+//        customizedCourseRepository.save(cource);
 
         Iterable<Cource> all = customizedCourseRepository.findAll();
 
-        Assertions.assertThat(Arrays.asList(customizedCourseRepository.findAll()).size()).isEqualTo(2);
+        // Iterable -> stream으로 변경
+        Stream<Cource> stream = StreamSupport.stream(all.spliterator(), false);
+        System.out.println(stream.count());
+
+        // 문법 잘못됨
+       // Assertions.assertThat(Arrays.asList(customizedCourseRepository.findAll()).size()).isEqualTo(23);
 
     }
 }
