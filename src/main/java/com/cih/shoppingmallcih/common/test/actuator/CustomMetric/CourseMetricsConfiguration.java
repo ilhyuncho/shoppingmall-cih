@@ -1,9 +1,7 @@
 package com.cih.shoppingmallcih.common.test.actuator.CustomMetric;
 
 import com.cih.shoppingmallcih.service.test.CourceService;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Gauge;
-import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +29,17 @@ public class CourseMetricsConfiguration {
                 .description("Total number2 of couses")
                 .register(meterRegistry);       // MeterRegistry에 등록
     }
+
+    // http://localhost:8090/actuator/metrics/api.courses.creation.time
+    @Bean
+    public Timer createCoursesTimer(MeterRegistry meterRegistry) {
+        // 연산이 수행되는 시간을 측정 할때
+        return Timer.builder("api.courses.creation.time")
+                .description("creation time")
+                .register(meterRegistry);       // MeterRegistry에 등록
+    }
+
+
 }
 
 

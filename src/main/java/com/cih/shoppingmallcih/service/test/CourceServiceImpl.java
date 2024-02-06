@@ -5,6 +5,8 @@ import com.cih.shoppingmallcih.controller.customException.CourceNotFoundExceptio
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.domain.test.customRepository.CourceRepository;
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Timer;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,15 @@ public class CourceServiceImpl implements CourceService{
     private CourceRepository courceRepository;
 
     private final Counter createCourseCounter;
+    private final Timer createCourseTimer;
 
     @Autowired
-    public CourceServiceImpl(CourceRepository courceRepository, Counter counter) {
+    public CourceServiceImpl(CourceRepository courceRepository, Counter counter, Timer timer) {
         // 직접 주입 받아 사용하면 측정지표 코드와 비즈니스 로직을 강하게 결합시키므로 좋은 방법이 아니다.
         // 대신 스프링 의 이벤트 리스너를 사용하면 Counter를 비즈니스 로직으로부터 분리할수 있다.
         this.courceRepository = courceRepository;
         this.createCourseCounter = counter;
+        this.createCourseTimer = timer;
     }
 
     public Iterable<Cource> getAvailableCources() {
@@ -29,11 +33,18 @@ public class CourceServiceImpl implements CourceService{
     }
 
     @Override
+    @SneakyThrows   // Java에서 메서드 선언부에 Throws 를 정의하지 않고도, 검사 된 예외를 Throw 할 수 있도록 하는
+                    // Lombok 에서 제공하는 어노테이션입니다.
+                    // 즉, throws 나 try-catch 구문을 통해서 Exception 에 대해 번거롭게 명시적으로 예외 처리를
+                    // 해줘야 하는 경우에 @SneakyThrows 어노테이션을 사용하여 명시적인 예외 처리를 생략할 수 있습니다.
     public Cource createCource(Cource cource) {
         // 호출 될때마다 Counter를 증가 시킴
         createCourseCounter.increment();
 
-        return courceRepository.save(cource);
+        //return courceRepository.save(cource);
+        return createCourseTimer.recordCallable(    // db에 값을 저장하고 값을 반환하는 Callable객체를 람다식으로 정의
+                () -> courceRepository.save(cource)
+        );
     }
 
     @Override
