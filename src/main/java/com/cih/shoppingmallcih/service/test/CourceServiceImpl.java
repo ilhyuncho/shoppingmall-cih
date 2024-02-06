@@ -4,6 +4,7 @@ package com.cih.shoppingmallcih.service.test;
 import com.cih.shoppingmallcih.controller.customException.CourceNotFoundException;
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.domain.test.customRepository.CourceRepository;
+import io.micrometer.core.instrument.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,14 @@ import java.util.Optional;
 public class CourceServiceImpl implements CourceService{
     private CourceRepository courceRepository;
 
+    private final Counter createCourseCounter;
+
     @Autowired
-    public CourceServiceImpl(CourceRepository courceRepository) {
+    public CourceServiceImpl(CourceRepository courceRepository, Counter counter) {
+        // 직접 주입 받아 사용하면 측정지표 코드와 비즈니스 로직을 강하게 결합시키므로 좋은 방법이 아니다.
+        // 대신 스프링 의 이벤트 리스너를 사용하면 Counter를 비즈니스 로직으로부터 분리할수 있다.
         this.courceRepository = courceRepository;
+        this.createCourseCounter = counter;
     }
 
     public Iterable<Cource> getAvailableCources() {
@@ -24,6 +30,9 @@ public class CourceServiceImpl implements CourceService{
 
     @Override
     public Cource createCource(Cource cource) {
+        // 호출 될때마다 Counter를 증가 시킴
+        createCourseCounter.increment();
+
         return courceRepository.save(cource);
     }
 
