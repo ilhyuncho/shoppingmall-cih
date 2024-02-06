@@ -6,7 +6,6 @@ import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityManager;
@@ -15,7 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -30,7 +28,8 @@ public class CriteriaAPICourceRepoTests {
     @Test
     public void test1(){
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();   // CriteriaBuilder 인스턴스를 사용하면 CriteriaAPi 기반 쿼리, 조회, 정렬 등을 사용 할수 있다
+        // CriteriaBuilder 인스턴스를 사용하면 CriteriaAPi 기반 쿼리, 조회, 정렬 등을 사용 할수 있다
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Cource> courceCriteriaQuery = criteriaBuilder.createQuery(Cource.class);  
 

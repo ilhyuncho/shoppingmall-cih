@@ -3,7 +3,6 @@ package com.cih.shoppingmallcih.repository.test;
 import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.domain.test.customRepository.CourceRepository;
 import com.cih.shoppingmallcih.domain.test.customRepository.projection.DescriptionOnly;
-import com.cih.shoppingmallcih.dto.test.Validation.Course;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
@@ -11,17 +10,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
-import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -77,8 +73,9 @@ public class CourceRepositoryTests {
         Pageable pageable = PageRequest.of(0,5);
         Assertions.assertThat(courceRepository.findAll(pageable)).hasSize(5);
 
+        // 다음 페이지 데이터 조회
         Pageable nextPageable = pageable.next();
-        Assertions.assertThat(courceRepository.findAll(nextPageable)).hasSize(4);
+        Assertions.assertThat(courceRepository.findAll(nextPageable)).hasSize(5);
     }
 
     @Test
@@ -86,10 +83,11 @@ public class CourceRepositoryTests {
     void test3(){
         Pageable pageable = PageRequest.of(0,5, Sort.by("Name").ascending());
 
+        // 목록의 첫번째 요소를 사용해서 정렬이 바르게 동작했는지 판정
         Condition<Cource> sortedFirstCourceCondition = new Condition<Cource>(){
             @Override
             public boolean matches(Cource value) {
-                return value.getId() == 5 && value.getName().equals("gaagdfgdfg");
+                return value.getId() == 10 && value.getName().equals("gaagdfgdfg");
             }
         };
 

@@ -23,13 +23,16 @@ public class CustomRepositoryTests {
 
     @Test
     public void test1(){
-//        Cource cource = Cource.builder()
-//                .name("gaagdfgdfg")
-//                .category("Sp34ring")
-//                .rating(3)
-//                .description("gdfg3434htghafsdf").build();
-//
-//        customizedCourseRepository.save(cource);
+        // 커스텀 리포지터리 예제
+        // save, findall 메서드만 호출 가능, 기능을 제한 했기 때문에
+        
+        Cource cource = Cource.builder()
+                .name("gaagdfgdfg")
+                .category("Sp34ring")
+                .rating(3)
+                .description("gdfg3434htghafsdf").build();
+
+        customizedCourseRepository.save(cource);
 
         Iterable<Cource> all = customizedCourseRepository.findAll();
 
