@@ -88,4 +88,8 @@ public class CourceServiceImpl implements CourceService{
     public void deleteCources() {
         courceRepository.deleteAll();
     }
+    @Override
+    public long count() {
+        return courceRepository.count();
+    }
 }
