@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 public class CourceServiceImpl implements CourceService{
     private CourceRepository courceRepository;
-
     private final Counter createCourseCounter;
     private final Timer createCourseTimer;
 
@@ -88,6 +87,7 @@ public class CourceServiceImpl implements CourceService{
 
     @Override
     public void deleteCourceById(Long courceId) {
+        // RestFul 예외 처리 1 : (2) 커스텀 예외 발생
         // CourceNotFoundException 발생 !!!!!!!!!!!!!!!!
         courceRepository.findById(courceId).orElseThrow(() -> new CourceNotFoundException(
                 String.format("No cource with id %s is available", courceId)
