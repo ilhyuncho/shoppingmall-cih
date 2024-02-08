@@ -86,6 +86,7 @@ public class CustomRestAdvice {
         map.put("error type", httpStatus.getReasonPhrase());
         map.put("code", "400");
         map.put("message", e.getMessage());
+        map.put("message1", "CustomRestAdvice class of handleRuntimeException()");
 
         // ResponseEntity 를 리턴하는 다른 형태
         return new ResponseEntity<>(map, responseHeaders, httpStatus);

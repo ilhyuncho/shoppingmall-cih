@@ -47,7 +47,7 @@ public class ExceptionController {
         Map<String, String> map = new HashMap<>();
 
         map.put("error type", httpStatus.getReasonPhrase());
-        map.put("code", "400");
+        map.put("code", "450");
         map.put("message", e.getMessage());
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
