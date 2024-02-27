@@ -48,6 +48,8 @@ public class CrudController {
     @PostMapping(value = "/add-header")
     public ResponseEntity<MemberDTO> addHeader(@RequestHeader("my-header") String header,
                                                @RequestBody MemberDTO memberDTO){
+        // HTTP 헤더를 사용하여 데이터를 받아야 한다면 @RequestHeader 애너테이션을 사용
+        
         log.info(header);
 
         return ResponseEntity.status(HttpStatus.OK).body(memberDTO);
