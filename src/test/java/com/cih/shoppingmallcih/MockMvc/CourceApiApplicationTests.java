@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc   // MockMVC프레임워크가 자동 구성되어 편리하게 MockMVc인스턴스를 주입 받아서 테스트 할수 있다.
 @ExtendWith(SpringExtension.class)  // JUnit5의 주피터 프로그래밍 모델과 스프링 테스트 컨텍스트 프레임워크를 함께 테스트에 사용할 수 있다
+                                    // @ExtendWith는 Junit5에서 제공하는 애너테이션,
+                                    //        SpringExtension같은 확장 기능을 지정해서 사용할수 있다
                                     // JUnit5버전에서 'spring-test'를 이용하기 위한 설정
 public class CourceApiApplicationTests {
 
@@ -37,9 +39,9 @@ public class CourceApiApplicationTests {
 
     @Test
     public void testPostCource() throws Exception {
-        Cource cource = Cource.builder().name("Padfsgdfg")
-                .category("Spring")
-                .rating(5)
+        Cource cource = Cource.builder().name("Padfsgdfg1111")
+                .category("Spring111")
+                .rating(15)
                 .description("gdfgexdfsdfsdfsdf").build();
 
         ObjectMapper objectMapper = new ObjectMapper(); // Cource인스턴스를 Json으로 직렬화 할때 사용
