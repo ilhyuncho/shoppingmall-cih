@@ -16,6 +16,7 @@ public class HotelRoomResponse {
 
     @JsonProperty("id") // JSON 객체로 변경시 속성값을 id 로 변경
     @JsonSerialize(using = ToStringSerializer.class)    // hotelRoomId 변수의 Long값을 String 타입으로 변경
+                                                        // using 속성에는 JsonSerializer 구현체 클래스를 속성값으로 지정 가능
     private final Long hotelRoomId;
 
     private final String roomNumber;
