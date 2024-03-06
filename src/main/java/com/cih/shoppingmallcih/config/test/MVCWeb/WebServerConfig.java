@@ -1,6 +1,8 @@
 package com.cih.shoppingmallcih.config.test.MVCWeb;
 
+import com.cih.shoppingmallcih.common.test.interceptor.LoggerInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -48,6 +50,15 @@ public class WebServerConfig implements WebMvcConfigurer {
 //        converters.add(new MappingJackson2XmlHttpMessageConverter());
 //    }
 //
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        // board 경로에 대해 interceptor 발생
+        registry.addInterceptor(new LoggerInterceptor())
+                .addPathPatterns("/board/*")
+                .excludePathPatterns("/css/**", "/images/**", "/js/**");
+    }
 
 
 
