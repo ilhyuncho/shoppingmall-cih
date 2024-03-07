@@ -60,6 +60,24 @@ public class WebServerConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/css/**", "/images/**", "/js/**");
     }
 
+//    @Bean
+//    public FilterRegistrationBean<CharacterEncodingFilter> defaultCharacterEncodingFilter() {
+//
+//        // 서블릿 필터 예제
+//
+//        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+//        encodingFilter.setEncoding("ASCII");
+//        encodingFilter.setForceEncoding(true);  // 서블릿 필터가 적용되는 요청 메시지와 응답 메시지 모두 인코딩 한다
+//
+//        FilterRegistrationBean<CharacterEncodingFilter> filterBean = new FilterRegistrationBean<>();
+//        filterBean.setFilter(encodingFilter); // 서블릿 필터 객체를 설정 함.
+//        filterBean.addInitParameter("paramName", "paramValue"); // 초기 파라미터를 설정
+//                                    // 이떄 파라미터 이름과 값을 넣으면 서블릿 필터 인터페이스인 Filter의 init() 메서드 인자
+//                                    // 인 FilterConfig 객체에서 사용할서 있다
+//        filterBean.addUrlPatterns("*");
+//        filterBean.setOrder(1);
+//        return filterBean;
+//    }
 
 
 }
