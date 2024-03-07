@@ -32,7 +32,7 @@ import java.util.Set;
 @EnableConfigurationProperties(AppProperties.class) // @ConfigurtationProperties 애너테이션이 붙어 있는 클래스를 스프링 컨테이너에 등록
                                                     // AppProperties.class 를 직접 명시 해야 함
                                                     // @ConfigurationPropertiesScan 을 지정해서 지정된 패키지 하위 클래스를 탐색 할수도 있음
-
+//@ConfigurationPropertiesScan("com.cih.shoppingmallcih.config.test")
 public class ShoppingmallCihApplication implements CommandLineRunner {  // 부트 메인 클래스가
                                                                 // CommandLineRunner 인터페이스를 구현
 
