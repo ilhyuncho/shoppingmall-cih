@@ -31,7 +31,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
-    //View 처리까지 완료 후
+    //View 처리까지 완료 후 : 뷰가 실행 완료 된 후 최종적으로 DispatcherServlet이 사용자에게 응답하기 전 실행
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
