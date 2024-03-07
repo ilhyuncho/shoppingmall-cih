@@ -12,6 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 
 @Configuration
+//@Profile("dev")
 @MapperScan(basePackages = {"com.cih.shoppingmallcih.mappers"}, sqlSessionFactoryRef = "sqlSessionFactory", sqlSessionTemplateRef = "sqlSessionTemplate")
 public class MybatisConfig {
 

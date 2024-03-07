@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -131,6 +132,7 @@ public class ShoppingmallCihApplication implements CommandLineRunner {  // ë¶€íŠ
     }
 
     @Bean(name="releaseNotes")
+    @Profile("production")
     public Collection<ReleaseNote> loadReleaseNotes(){
         Set<ReleaseNote> releaseNotes = new LinkedHashSet<>();
 
