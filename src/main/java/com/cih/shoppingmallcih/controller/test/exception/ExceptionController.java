@@ -4,6 +4,8 @@ package com.cih.shoppingmallcih.controller.test.exception;
 import com.cih.shoppingmallcih.common.Constants;
 import com.cih.shoppingmallcih.controller.customException.CustomException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -22,13 +25,29 @@ import java.util.Map;
 @Log4j2
 public class ExceptionController {
 
+    private MessageSource messageSource;
+    ExceptionController(MessageSource messageSource){
+        this.messageSource = messageSource;
+    }
+
     @GetMapping
     public void getRuntimeException() {
-        throw new RuntimeException("getRunTimeException 호출");
+
+        Locale locale = LocaleContextHolder.getLocale();
+
+        //Locale locale = Locale.US;    // 영어 테스트
+        
+        String[] args = {"10"};
+        String errorMesage = messageSource.getMessage("main.error.message", args, locale);
+        throw new RuntimeException(errorMesage);
+
+       // throw new RuntimeException("getRunTimeException 호출");
     }
 
     @GetMapping("/custom")
     public void getCustomException() throws CustomException{
+
+
         throw new CustomException(Constants.ExceptionClass.PRODUCT, HttpStatus.BAD_REQUEST, "getCusom 호출");
     }
 
