@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString   // 24.03.11 추가
 public class ProductResponseDTO {
 
     private Long number;
