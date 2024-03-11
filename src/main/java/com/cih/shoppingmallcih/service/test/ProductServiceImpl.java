@@ -1,5 +1,6 @@
 package com.cih.shoppingmallcih.service.test;
 
+import com.cih.shoppingmallcih.common.test.aspect.ElapseLoggable;
 import com.cih.shoppingmallcih.domain.test.product.Product;
 import com.cih.shoppingmallcih.domain.test.product.ProductRepository;
 import com.cih.shoppingmallcih.dto.test.product.ProductDTO;
@@ -19,6 +20,7 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
+    @ElapseLoggable
     public ProductResponseDTO getProduct(Long productID){
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
 
