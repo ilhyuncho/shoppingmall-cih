@@ -1,9 +1,15 @@
 package com.cih.shoppingmallcih.config.test.MVCWeb;
 
 import com.cih.shoppingmallcih.common.test.interceptor.LoggerInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+
+import java.util.Locale;
 
 @Configuration
 public class WebServerConfig implements WebMvcConfigurer {
@@ -51,13 +57,30 @@ public class WebServerConfig implements WebMvcConfigurer {
 //    }
 //
 
+    @Bean(value = "localeResolver")
+    public LocaleResolver localeResolver(){
+        AcceptHeaderLocaleResolver acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
+
+        // Accept-Language헤더가 없거나 알수 없던 헤더 값이 전달되면 Locale 객체는 KOREAN으로 설정 됨
+        acceptHeaderLocaleResolver.setDefaultLocale(Locale.KOREAN); // Locale객체 생성 못할떄 Locale 객체를 설정
+        return acceptHeaderLocaleResolver;
+    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        // board 경로에 대해 interceptor 발생
+        // 1.board 경로에 대해 interceptor 발생
         registry.addInterceptor(new LoggerInterceptor())
                 .addPathPatterns("/board/*")
                 .excludePathPatterns("/css/**", "/images/**", "/js/**");
+
+        // 2.Locale interceptor 설정
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        // 클라이언트가 웹 서버에 리소스를 요청할때 Accept-Language헤더가 아닌 파라미터로 Locale값을 변경하고 싶다면
+        // localeChangeInterceptor 를 사용
+        // 사용자가 GET /Hotels?locale=ko로 요청하면 locale 파리미터 값 'ko'를 사용하여 Locale 객체를 생성하고
+        //애플리케이션 내부에서 쓸수 있다.
+        localeChangeInterceptor.setParamName("locale");
+        registry.addInterceptor(localeChangeInterceptor).excludePathPatterns("/favicon.ico");
     }
 
 //    @Bean
