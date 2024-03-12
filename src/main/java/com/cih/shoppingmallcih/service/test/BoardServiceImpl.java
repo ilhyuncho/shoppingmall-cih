@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,8 @@ public class BoardServiceImpl implements BoardService{
     private final ModelMapper modelMapper;
 
     private final BoardRepository boardRepository;
+
+    private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Override
     public Long register(BoardDTO boardDTO) {
@@ -89,6 +92,9 @@ public class BoardServiceImpl implements BoardService{
         List<BoardDTO> dtoList = result.getContent().stream()
                 .map(board -> modelMapper.map(board,BoardDTO.class)).collect(Collectors.toList());
 
+
+        log.error("board Service : List()");
+
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
@@ -125,6 +131,10 @@ public class BoardServiceImpl implements BoardService{
                 boardRepository.searchWithAll(types, pageRequestDTO.getKeyword(), page);
 
         List<BoardListAllDTO> content = boardListAllDTOS.getContent();
+
+        log.error("board Service : listWithAll()");
+        // 쓰레드 로 로그 출력
+        threadPoolTaskExecutor.execute(() -> log.error("entity :{}", content.toString()));
 
 
         return PageResponseDTO.<BoardListAllDTO>withAll()
