@@ -2,21 +2,19 @@ package com.cih.shoppingmallcih.service;
 
 
 import com.cih.shoppingmallcih.domain.test.product.Product;
+import com.cih.shoppingmallcih.domain.test.product.ProductDetail;
 import com.cih.shoppingmallcih.domain.test.product.ProductRepository;
 import com.cih.shoppingmallcih.dto.test.product.ProductDTO;
 import com.cih.shoppingmallcih.dto.test.product.ProductResponseDTO;
 import com.cih.shoppingmallcih.service.test.ProductService;
 import com.cih.shoppingmallcih.service.test.ProductServiceImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
@@ -87,6 +86,23 @@ public class ProductServiceTests {
         verify(productRepository).save(any());
     }
 
+    @Test
+    public void testMockBean(){
+        //@MockBean       // 스프링에 mock객체를 등록해서 주입받는 형식
+        //ProductRepository productRepository;
+        // 를 활용한 테스트 기법
+
+        // org.mockito.BDDMockito.given;
+        // Mockito.when 와 기능이 같다. ( BDDMockito 클래스는 Mockito 클래스를 상속받기 때문에 )
+        given(this.productRepository.findById(any()))
+                .willReturn(Optional.of(new Product(1L, "fsdfsdf", 3, 5,
+                        new ProductDetail())));
+
+        ProductResponseDTO product = productService.getProduct(1L);
+
+        Assertions.assertNotNull(product);
+        Assertions.assertEquals("fsdfsdf", product.getName());
+    }
 
 
 
