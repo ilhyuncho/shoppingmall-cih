@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest( controllers = {ProductController.class})   // 대상 클래스만 로드해 테스트, @SpringBootTest보다 가볍게 테스트
+        // @SpringBootTest애너테이션과 다른 점은 @AutoConfigureMockMvc 애너테이션이 없이도 MockMvc 객체를 생성한다.
 public class ProductControllerTests {
 
     @Autowired
@@ -74,8 +75,11 @@ public class ProductControllerTests {
 
         System.out.println(Content.toString()); // {"name":"pen","stock":2000}
 
-        mockMvc.perform(post("/product/save").content(Content)
+        mockMvc.perform(post("/product/save")
+                        .content(Content)
                         .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        //.queryParam("type", "sdfsdf")
+                        //.param() // application/x-www.form-urlencoded컨텐츠 타입의 춍어 메시지 바디에  키-밸류 데이터를 설정 하는데 사용
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.number").exists())

@@ -5,6 +5,7 @@ import com.cih.shoppingmallcih.domain.test.customRepository.Cource;
 import com.cih.shoppingmallcih.service.test.CourceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)   // 기본값은 WebEnvironment.MOCK
+                                // MOCK으로 설정된 테스트 케이스는 실제 서블릿 컨테이너를 사용하지 않고 테스트를 실행 한다
+                                // 실제 서블릿 컨테이너를 실행하지 않고 목 서블릿 컨테이너를 사용하여 테스트 진행
 @AutoConfigureMockMvc   // MockMVC프레임워크가 자동 구성되어 편리하게 MockMVc인스턴스를 주입 받아서 테스트 할수 있다.
+                        // 설정 없으면    private MockMvc mockMvc; 주입 실패
+                        // @SpringBootTest 와 같이 테스트 할때 사용
 @ExtendWith(SpringExtension.class)  // JUnit5의 주피터 프로그래밍 모델과 스프링 테스트 컨텍스트 프레임워크를 함께 테스트에 사용할 수 있다
                                     // @ExtendWith는 Junit5에서 제공하는 애너테이션,
                                     //        SpringExtension같은 확장 기능을 지정해서 사용할수 있다
@@ -52,9 +57,11 @@ public class CourceApiApplicationTests {
                 .andDo(print())     // 테스트 진행 과정을 콘솔에 출력 함
                 .andExpect(jsonPath("$.*", hasSize(5)))
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.name").value("Padfsgdfg"))
-                .andExpect(jsonPath("$.category").value("Spring"))
-                .andExpect(jsonPath("$.rating").value(5))
+                .andExpect(jsonPath("$.name").value("Padfsgdfg1111"))
+                .andExpect(jsonPath("$.name", Matchers.is("Padfsgdfg1111")))
+                .andExpect(jsonPath("$.category").value("Spring111"))
+                .andExpect(jsonPath("$.rating").value(15))
+
                 //.andExpect(status().isCreated())  // Http응답코드로 HTTP 201 Created가 반환되는지 단언.. 근데 200이 온다.!~!~
                 .andReturn().getResponse();
 
