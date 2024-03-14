@@ -1,6 +1,7 @@
 package com.cih.shoppingmallcih.domain.test.hotel;
 
 
+import com.cih.shoppingmallcih.domain.test.hotel.Converter.HotelStatusConverter;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class HotelEntity extends AbstractManageEntity {
     private Long hotelId;
 
     @Column(name = "status")
-    @Enumerated(value=EnumType.STRING)  // status를 변환하는 방식, DB저장시 문자열(키?)로 저장, EnumType.ORDINAL이면 숫자
+   // @Enumerated(value=EnumType.STRING)  // status를 변환하는 방식, DB저장시 문자열(키?)로 저장, EnumType.ORDINAL이면 숫자
+    @Convert(converter= HotelStatusConverter.class)
     private HotelStatus status;
 
     @Column
