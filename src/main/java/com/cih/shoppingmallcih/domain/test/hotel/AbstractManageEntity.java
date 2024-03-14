@@ -25,6 +25,6 @@ public abstract class AbstractManageEntity {
 
     public AbstractManageEntity() {
         this.createdAt = ZonedDateTime.now();
-       // this.createdBy = UserIdHolder.getUserId();
+        this.createdBy = UserIdHolder.getUserId();
     }
 }
