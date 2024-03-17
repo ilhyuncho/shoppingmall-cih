@@ -1,5 +1,9 @@
 package com.cih.shoppingmallcih.domain.test.hotel;
 
+
+
+import org.springframework.util.Assert;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -17,9 +21,11 @@ public enum HotelStatus {
     }
 
     public static HotelStatus fromValue(Integer value) {
-        if (value == null) {
-            throw new IllegalArgumentException("value is null");
-        }
+//        if (value == null) {
+//            throw new IllegalArgumentException("value is null");
+//        }
+        Assert.isNull(value, "value is null");
+
         return valueMap.get(value);
     }
     public Integer getValue(){
