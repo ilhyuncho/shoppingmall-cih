@@ -4,10 +4,10 @@ package com.cih.shoppingmallcih.service.test;
 import com.cih.shoppingmallcih.domain.test.guestbook.Guestbook;
 import com.cih.shoppingmallcih.domain.test.guestbook.GuestbookRepository;
 import com.cih.shoppingmallcih.dto.test.GuestbookDTO;
+import com.cih.shoppingmallcih.dto.typeCommand.GuestBookType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -65,6 +65,15 @@ public class GuestbookServiceImpl implements GuestbookService{
     public void remove(Long gno) {
         guestbookRepository.deleteById(gno);
     }
+
+    public void testUserType(String type){
+
+        log.error("testUserType() : String: " + type);
+    }
+    public void testUserTypeNew(GuestBookType type){
+        log.error("testUserTypeNew() GuestBookType: " + type);
+    }
+
 
 
 }

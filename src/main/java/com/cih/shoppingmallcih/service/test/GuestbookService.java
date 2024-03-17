@@ -1,8 +1,7 @@
 package com.cih.shoppingmallcih.service.test;
 
-import com.cih.shoppingmallcih.domain.test.guestbook.Guestbook;
 import com.cih.shoppingmallcih.dto.test.GuestbookDTO;
-
+import com.cih.shoppingmallcih.dto.typeCommand.GuestBookType;
 
 
 public interface GuestbookService {
@@ -26,6 +25,8 @@ public interface GuestbookService {
 //        return guestbook;
 //    }
 
+    void testUserType(String type);
+    void testUserTypeNew(GuestBookType type);
 
 
 }
