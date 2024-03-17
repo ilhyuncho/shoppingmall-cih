@@ -28,9 +28,9 @@ public class GuestbookController {
     public static final String GUEST_GOLD = "GOLD";
     public static final String GUEST_SILVER = "SILVER";
     public static final String GUEST_BRONZE = "BRONZE";
-    public static final GuestBookType GUEST_GOLD_NEW = new GuestBookType("GOLD");
-    public static final GuestBookType GUEST_SILVER_NEW = new GuestBookType("SILVER");
-    public static final GuestBookType GUEST_BRONZE_NEW = new GuestBookType("BRONZE");
+//    public static final GuestBookType GUEST_GOLD_NEW = new GuestBookType("GOLD");
+//    public static final GuestBookType GUEST_SILVER_NEW = new GuestBookType("SILVER");
+//    public static final GuestBookType GUEST_BRONZE_NEW = new GuestBookType("BRONZE");
 
 
     @GetMapping({"/", "/list"})
@@ -68,13 +68,18 @@ public class GuestbookController {
 
         mybatisService.insertGuestBook(dto);
 
+        // 테스트 코드--------------------------------------
         log.error("getGuestType: " + dto.getGuestType());   // getGuestType: BRONZE
         log.error("getGuestType.getName(): " + dto.getGuestType().getName());   // 브론즈
 
         guestbookService.testUserType(GUEST_GOLD);
         guestbookService.testUserType("상관없는 스트링을 넣어도 동작");
         // 개선 된 버전
-        guestbookService.testUserTypeNew(GUEST_GOLD_NEW);
+        guestbookService.testUserTypeNew(GuestBookType.GUEST_GOLD_NEW);
+        // 테스트 코드--------------------------------------
+
+
+
 
         return "redirect:/guestbook/list";
     }
